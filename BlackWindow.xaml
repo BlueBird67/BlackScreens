@@ -1,0 +1,19 @@
+﻿<Window x:Class="BlackScreensWPF.BlackWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlackScreensWPF"
+        mc:Ignorable="d"
+        AllowsTransparency="True"
+        Loaded="Window_Loaded" FontFamily="Ubuntu"
+        Title="BlackScreen" Height="169.302" Width="484.135" WindowStyle="None" ShowInTaskbar="False" IsTabStop="False" Margin="0 0 0 0" Background="Black" MouseLeftButtonDown="spMain_MouseLeftButtonDown">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </Window.Resources>
+    <StackPanel Name="spMain" Margin="0,30,0,0" VerticalAlignment="Top" Width="auto" Height="auto" HorizontalAlignment="stretch">
+        <TextBlock Name="tbScreenDeviceName" VerticalAlignment="Top" Text="" FontSize="30" Width="Auto" Foreground="White" HorizontalAlignment="Center" Visibility="{Binding Path=ShowTexts, Converter={StaticResource BoolToVis}}"></TextBlock>
+        <TextBlock Name="tbKeyboardHelp" VerticalAlignment="Top" Text="" FontSize="20" Width="Auto" Foreground="White" HorizontalAlignment="Center" Visibility="{Binding Path=ShowTexts, Converter={StaticResource BoolToVis}}"></TextBlock>
+        <TextBlock Name="tbClickHelp" VerticalAlignment="Top" Text="Click on this window to show parameters" FontSize="20" Width="Auto" Foreground="White" HorizontalAlignment="Center" Visibility="{Binding Path=ShowTexts, Converter={StaticResource BoolToVis}}"></TextBlock>
+    </StackPanel>
+</Window>
