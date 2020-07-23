@@ -287,5 +287,8 @@
   <ItemGroup>
     <Resource Include="moon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="docs\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
