@@ -1,5 +1,4 @@
-<p align="center">Windows BlackScreens Application</p>
-<br/>
+# Windows BlackScreens Application
 
 BlackScreens is a Windows 10 Application that let you darken any of your current screen with simple keyboard shortcut switch: Alt+1 to Alt+6
 
