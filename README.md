@@ -8,6 +8,7 @@ Main use cases for multiple screens users:
 - need to watch one screen without being disturb by the other(s) screen(s)
 - being sure that no one else can see one or multiple screen(s), for example in a presentation or web conference
 
+<img src="docs/BlackScreens_MainWindow.png" width="60%">
 
 ## Tests
 
