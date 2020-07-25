@@ -24,6 +24,10 @@ It need testers in this cases:
 
 Thank you.
 
+## Other code used
+- Wpf-Notificon from Hardcodet https://github.com/hardcodet/wpf-notifyicon/tree/master/src/NotifyIconWpf
+- WindowsDisplayAPI from Falahati https://github.com/falahati/WindowsDisplayAPI/tree/master/WindowsDisplayAPI
+
 ## License
 
 [GNU GPL v3.0](https://github.com/BlueBird67/BlackScreens/blob/master/LICENSE)
