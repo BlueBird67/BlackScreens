@@ -271,7 +271,11 @@ namespace BlackScreensWPF
                 CommonData.dataInstance.HideTexts = !up.showTextsOnBlackScreens;
                 CommonData.dataInstance.ClickThrough = up.ClickThrough;
             }
-            catch (Exception) { }
+            catch (Exception) {
+                CommonData.dataInstance.ClickThrough = false;
+                CommonData.dataInstance.HideTexts = false;
+                CommonData.dataInstance.Opacity = 90;
+            }
         }
 
         /// <summary>
