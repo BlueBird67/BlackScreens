@@ -21,7 +21,7 @@ namespace BlackScreensWPF
         public MainWindow()
         {
             InitializeComponent();
-            this.tbTitle.Text = "BlackScreens 1.05";
+            this.tbTitle.Text = "BlackScreens 1.06";
             loadUserConfigFile();
             this.DataContext = CommonData.dataInstance;
             CommonData.dataInstance.FParams = this;
@@ -123,7 +123,7 @@ namespace BlackScreensWPF
             tbScreen2AltKeyInfo.Visibility = (Screen.AllScreens.Length > 1) ? Visibility.Visible : Visibility.Hidden;
             tbScreen3AltKeyInfo.Visibility = (Screen.AllScreens.Length > 2) ? Visibility.Visible : Visibility.Hidden;
             tbScreen4AltKeyInfo.Visibility = (Screen.AllScreens.Length > 3) ? Visibility.Visible : Visibility.Hidden;
-            // Collapsed used to hide complete line if there is not at least 4 screens used (presume large majority of users cases!)
+            // Collapsed used to hide complete line (screen 4,5,6) if there is not at least 4 screens used (presume large majority of users cases!)
             tbScreen4Name.Visibility = (Screen.AllScreens.Length > 3) ? Visibility.Visible : Visibility.Collapsed;
             tbScreen5AltKeyInfo.Visibility = (Screen.AllScreens.Length > 4) ? Visibility.Visible : Visibility.Collapsed;
             tbScreen5Name.Visibility = (Screen.AllScreens.Length > 4) ? Visibility.Visible : Visibility.Collapsed;
@@ -269,6 +269,7 @@ namespace BlackScreensWPF
                 up = (UserPreferences)mySerializer.Deserialize(myFileStream);
                 CommonData.dataInstance.Opacity = up.Opacity;
                 CommonData.dataInstance.HideTexts = !up.showTextsOnBlackScreens;
+                CommonData.dataInstance.ClickThrough = up.ClickThrough;
             }
             catch (Exception) { }
         }
@@ -281,6 +282,7 @@ namespace BlackScreensWPF
             UserPreferences up = new UserPreferences();
             up.Opacity = CommonData.dataInstance.Opacity;
             up.showTextsOnBlackScreens = !CommonData.dataInstance.HideTexts;
+            up.ClickThrough = CommonData.dataInstance.ClickThrough;
 
             String exeLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             XmlSerializer mySerializer = new XmlSerializer(typeof(UserPreferences));
@@ -365,6 +367,11 @@ namespace BlackScreensWPF
         {
             Hyperlink hl = (Hyperlink)sender;
             System.Diagnostics.Process.Start(hl.NavigateUri.AbsoluteUri);
+        }
+
+        private void cbClickThrough_Click(object sender, RoutedEventArgs e)
+        {
+            CommonData.dataInstance.updateAllBlackWindowParams();
         }
     }
 }

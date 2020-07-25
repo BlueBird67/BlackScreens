@@ -32,10 +32,12 @@ namespace BlackScreensWPF
         private Rectangle screen5TooltipData = new Rectangle();
         private Rectangle screen6TooltipData = new Rectangle();
         private bool hideTexts = true;
+        private bool clickThrough = false;
 
         // Users options
         public int Opacity { get => opacity; set => opacity = value; }
         public bool HideTexts { get => hideTexts; set => hideTexts = value; }
+        public bool ClickThrough { get => clickThrough; set => clickThrough = value; }
 
         public string Screen1Name { get => screen1Name; set => screen1Name = value; }
         public string Screen2Name { get => screen2Name; set => screen2Name = value; }

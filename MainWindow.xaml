@@ -297,22 +297,27 @@
             </TextBlock>
             <Slider Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 15 0 0" HorizontalAlignment="Left" Name="sOpacity" Value="{Binding Opacity}" Maximum="100" Width="511" TickFrequency="5" TickPlacement="Both" IsSnapToTickEnabled="True" ValueChanged="sOpacity_ValueChanged">
             </Slider>
-            <StackPanel Grid.Row="6" Grid.Column="0"  Orientation="Horizontal" HorizontalAlignment="Right">
-                <TextBlock Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" Text="Hide texts" Margin="0 0 50 0"></TextBlock>
-                <CheckBox Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" Name="cbShowTexts" Margin="0,4,78,0" Background="Black" Foreground="#FFFDFDFD" Style="{DynamicResource CheckBoxStyleBlack}" IsChecked="{Binding HideTexts}"></CheckBox>
+            <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="5" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0 10 0 0">
+                <TextBlock Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" Text="Hide texts" Margin="70 0 15 0"></TextBlock>
+                <CheckBox Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" Name="cbShowTexts" Margin="0 0 75 0" Background="Black" Foreground="#FFFDFDFD" Style="{DynamicResource CheckBoxStyleBlack}" IsChecked="{Binding HideTexts}"></CheckBox>
+                <TextBlock Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" Text="Allow click through" Margin="0 0 15 0"></TextBlock>
+                <CheckBox Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" Name="cbClickThrough" Margin="0 0 0 0" Background="Black" Foreground="#FFFDFDFD" Style="{DynamicResource CheckBoxStyleBlack}" IsChecked="{Binding ClickThrough}" Click="cbClickThrough_Click"></CheckBox>
             </StackPanel>
-            <Button Grid.Row="7" Grid.Column="0" Margin="4,30,6,0" Height="30" Grid.ColumnSpan="1" Name="bExit" Click="bExit_Click">Exit</Button>
-            <Button Grid.Row="7" Grid.Column="1" Margin="5 30 5 0" Height="30" Grid.ColumnSpan="2" Name="bMinimize" Click="bMinimize_Click">Minimize</Button>
+            <Button Grid.Row="7" Grid.Column="0" Margin="4,15,6,0" Height="30" Grid.ColumnSpan="1" Name="bExit" Click="bExit_Click">Exit</Button>
+            <Button Grid.Row="7" Grid.Column="1" Margin="5 15 5 0" Height="30" Grid.ColumnSpan="2" Name="bMinimize" Click="bMinimize_Click">Minimize</Button>
             <StackPanel Grid.Row="8" Grid.ColumnSpan="3" Orientation="Horizontal" Visibility="Collapsed" Height="auto" Width="auto" Name="spUpdatesHistory" Background="#262626">
                 <Expander Name="expUpdatesHistory" Margin="0 0 0 0" IsExpanded="True" Collapsed="expUpdatesHistory_Collapsed" Cursor="Hand"/>
                 <RichTextBox HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" Width="765" Name="rtbAboutText" Height="auto" IsDocumentEnabled="True" Background="Transparent" Foreground="White" AcceptsReturn="True" AcceptsTab="True" BorderBrush="Transparent" BorderThickness="0" IsReadOnly="True" MaxHeight="250">
                     <FlowDocument PageWidth="{Binding Path=ActualWidth, ElementName=rtbAboutText, Mode=OneWay}">
                         <Paragraph Foreground="LightGreen" Margin="0">BlackScreens</Paragraph>
-                        <Paragraph Margin="0" xml:space="preserve">      Open Source. Working on Windows 10, up to 6 screens. <Hyperlink PreviewMouseLeftButtonDown="Hyperlink_PreviewMouseLeftButtonDown" NavigateUri="http://www.google.fr" Foreground="White" Cursor="Hand">Github link</Hyperlink>.</Paragraph>
-                        
+                        <Paragraph Margin="0" xml:space="preserve">      Open Source. Working on Windows 10, up to 6 screens. <Hyperlink PreviewMouseLeftButtonDown="Hyperlink_PreviewMouseLeftButtonDown" NavigateUri="https://github.com/BlueBird67/BlackScreens" Foreground="White" Cursor="Hand">Github link</Hyperlink>.</Paragraph>
                         <Paragraph Foreground="LightGreen" Margin="0 10 0 0">Updates history</Paragraph>
+                        <Paragraph Margin="0">v1.06 (25/07/2020)</Paragraph>
+                        <Paragraph Margin="0" xml:space="preserve">      - Adding mouse clickthrough option</Paragraph>
                         <Paragraph Margin="0">v1.05 (21/07/2020)</Paragraph>
-                        <Paragraph Margin="0" xml:space="preserve">      - Adding screens positionning information on clipboard when left clicking on first screen name in the main parameters screen</Paragraph></FlowDocument></RichTextBox>
+                        <Paragraph Margin="0" xml:space="preserve">      - Adding screens positionning information on clipboard when left clicking on first screen name in the main parameters screen</Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
             </StackPanel>
         </Grid>
         <taskbarnotification:TaskbarIcon x:Name="notifyIcon"

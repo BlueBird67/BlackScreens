@@ -16,7 +16,13 @@ namespace BlackScreensWPF
         private const UInt32 SWP_NOSIZE = 0x0001;
         private const UInt32 SWP_NOMOVE = 0x0002;
         private const UInt32 TOPMOST_FLAGS = SWP_NOMOVE | SWP_NOSIZE;
+        private const int WS_EX_TRANSPARENT = 0x00000020;
+        private const int GWL_EXSTYLE = (-20);
 
+        [DllImport("user32.dll")]
+        static extern int GetWindowLong(IntPtr hwnd, int index);
+        [DllImport("user32.dll")]
+        static extern int SetWindowLong(IntPtr hwnd, int index, int newStyle);
         // Used to force black window on top of all others OS windows
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -63,6 +69,7 @@ namespace BlackScreensWPF
         public void updateBlackWindowParams()
         {
             this.Opacity = (Double)(CommonData.dataInstance.Opacity) / 100;
+            setWindowsClickThrough(CommonData.dataInstance.ClickThrough);
         }
 
         /// <summary>
@@ -80,7 +87,18 @@ namespace BlackScreensWPF
             // Set BlackWindow top most against all others Microsoft Windows windows
             System.Windows.Interop.WindowInteropHelper wih = new System.Windows.Interop.WindowInteropHelper(this);
             SetWindowPos(wih.Handle, HWND_TOPMOST, 100, 100, 300, 300, TOPMOST_FLAGS);
+            setWindowsClickThrough(false);
             updateScreenDeviceName();
+        }
+
+        private void setWindowsClickThrough(bool clickThrough)
+        {
+            System.Windows.Interop.WindowInteropHelper wih = new System.Windows.Interop.WindowInteropHelper(this);
+            var extendedStyle = GetWindowLong(wih.Handle, GWL_EXSTYLE);
+            if (clickThrough) // Allow mouse clickthrough on this window
+                SetWindowLong(wih.Handle, GWL_EXSTYLE, extendedStyle | WS_EX_TRANSPARENT);
+            else // Cancel mouse clickthrough
+                SetWindowLong(wih.Handle, GWL_EXSTYLE, 0);
         }
 
         private void spMain_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
