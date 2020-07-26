@@ -12,7 +12,7 @@ Main use cases for multiple screens users:
 
 ## Download and install
 
-No installation needed, just launch the executable you can download here https://github.com/BlueBird67/BlackScreens/releases/tag/1.6
+No installation needed, just launch the executable you can download here https://github.com/BlueBird67/BlackScreens/releases/tag/1.6 [Current version 1.6 25/07/2020]
 
 ## Tests
 
