@@ -10,6 +10,10 @@ Main use cases for multiple screens users:
 
 <img src="docs/BlackScreens_MainWindow.png" width="60%">
 
+## Download and install
+
+No installation needed, just launch the executable you can download here https://github.com/BlueBird67/BlackScreens/releases/tag/1.6
+
 ## Tests
 
 This App has been tested already on Windows 10 lastest officials builds on jully 2020, with 2 different screens.
