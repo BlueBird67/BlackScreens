@@ -12,7 +12,16 @@ Main use cases for multiple screens users:
 
 ## Download and install
 
-No installation needed, just launch the executable you can download here https://github.com/BlueBird67/BlackScreens/releases/tag/1.6 [Current version 1.6 25/07/2020]
+No installation needed, just launch the executable you can download here https://github.com/BlueBird67/BlackScreens/releases/download/1.7/BlackScreens.exe [Current version 1.7 27/07/2020]
+
+## Versions
+- v1.07 (27/07/2020)
+  Adding ALT+0 key to switch all screens
+- v1.06 (25/07/2020)
+  Adding mouse clickthrough option
+- v1.05 (21/07/2020)
+  Adding screens positionning information on clipboard when left clicking on first screen name in the main parameters screen
+
 
 ## Tests
 
