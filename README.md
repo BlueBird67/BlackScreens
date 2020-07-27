@@ -1,6 +1,6 @@
 # Windows BlackScreens Application
 
-BlackScreens is a Windows 10 Application that let you darken any of your current screen with simple keyboard shortcut switch: Alt+1 to Alt+6
+BlackScreens is a Windows 10 Application that let you darken any of your current screen with simple keyboard shortcut switch: Alt+1 to Alt+6 (Alt+0 to switch all screens at once).
 
 It work by showing, for each screen, an App Window on top of all others (system), with selected opacity (1% to 100%). An option for mouse clicking through the black windows now exist.
 
