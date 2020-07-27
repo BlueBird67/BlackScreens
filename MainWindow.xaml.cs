@@ -265,7 +265,7 @@ namespace BlackScreensWPF
             XmlSerializer mySerializer = new XmlSerializer(typeof(UserPreferences));
 
             try { 
-                FileStream myFileStream = new FileStream(exeLocation+"/BlacScreensPrefs.xml", FileMode.Open);
+                FileStream myFileStream = new FileStream(exeLocation+"/BlackScreensPrefs.xml", FileMode.Open);
                 up = (UserPreferences)mySerializer.Deserialize(myFileStream);
                 CommonData.dataInstance.Opacity = up.Opacity;
                 CommonData.dataInstance.HideTexts = !up.showTextsOnBlackScreens;
@@ -291,7 +291,7 @@ namespace BlackScreensWPF
             String exeLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             XmlSerializer mySerializer = new XmlSerializer(typeof(UserPreferences));
             try { 
-                StreamWriter myWriter = new StreamWriter(exeLocation + "/BlacScreensPrefs.xml");
+                StreamWriter myWriter = new StreamWriter(exeLocation + "/BlackScreensPrefs.xml");
                 mySerializer.Serialize(myWriter, up);
                 myWriter.Close();
             }
