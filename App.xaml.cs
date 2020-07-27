@@ -47,88 +47,171 @@ namespace BlackScreensWPF
             }
         }
 
+        /// <summary>
+        /// Return number of active BlackScreen, meaning count of BlackWindow which are currently visible
+        /// </summary>
+        /// <returns></returns>
+        private int numberOfActiveBlackScreen(BlackWindow[] bwArray)
+        {
+            int nbActiveBlackScreens = 0;
+            foreach (BlackWindow bw in bwArray)
+            {
+                if ((bw != null) && (bw.IsVisible))
+                {
+                    nbActiveBlackScreens++;
+                }
+            }
+            return nbActiveBlackScreens;
+        }
+
+        /// <summary>
+        /// Init a new BlackWindow
+        /// </summary>
+        /// <returns></returns>
+        private BlackWindow initNewBlackWindow()
+        {
+            // Creating first time BlackWindows for this screen
+            BlackWindow bw = new BlackWindow();
+            bw.updateBlackWindowParams();
+            return bw;
+        }
+
+        /// <summary>
+        /// Hide this specific BlackWindow
+        /// </summary>
+        /// <param name="bsTohide"></param>
+        private void hideBlackWindow(BlackWindow bsTohide)
+        {
+            if (bsTohide != null)
+            {
+                bsTohide.HideWindow();
+                CommonData.dataInstance.FParams.Topmost = false;
+            }
+        }
+
+        /// <summary>
+        /// Show a specific BlackWindow on associated screen
+        /// </summary>
+        /// <param name="bsToShow">BlackWindow to show</param>
+        /// <param name="screen">Associated screen boundaries</param>
+        /// <param name="bwNumber">BlackWindow number (1 to 6)</param>
+        private void showBlackWindow(BlackWindow bwToShow, Screen screen, int bwNumber)
+        {
+            String textAltToShow = "ALT + " + bwNumber;
+            Rectangle bounds = screen.Bounds;
+            //currentBlackWindow.Left = bounds.X;
+            //currentBlackWindow.Top = bounds.Y;
+            bwToShow.Left = bounds.Left;
+            bwToShow.Top = bounds.Top;
+            bwToShow.Height = bounds.Height;
+            bwToShow.Width = bounds.Width;
+            bwToShow.KeyToUse = "Use key " + textAltToShow + " to switch";
+            bwToShow.ShowWindow();
+            // Hidding parameters window if it's on the same black screen to switch visible
+            if (CommonData.dataInstance.ParamsScreenDeviceName == bwToShow.ScreenDeviceName)
+            {
+                CommonData.dataInstance.FParams.WindowState = WindowState.Minimized;
+            }
+        }
+
+        /// <summary>
+        /// Show all BlackWindows for all existing screens
+        /// </summary>
+        /// <param name="blackWindows">BlackWindow Array</param>
+        private void showAllBlackWindows(BlackWindow[] blackWindows)
+        {
+            for (int iBw=0; iBw < blackWindows.Length; iBw++)
+            {
+                if (blackWindows[iBw] == null)
+                    blackWindows[iBw] = initNewBlackWindow();
+                showBlackWindow(blackWindows[iBw], Screen.AllScreens[iBw], iBw+1);
+            }
+        }
+
+        /// <summary>
+        /// Hide all black Windows for all existing screens
+        /// </summary>
+        /// <param name="blackWindows"></param>
+        private void hideAllBlackWindows(BlackWindow[] blackWindows)
+        {
+            for (int iBw = 0; iBw < blackWindows.Length; iBw++)
+            {
+                hideBlackWindow(blackWindows[iBw]);
+            }
+        }
+
         private bool Kh_KeyDown(int wParam, KeyboardHookData lParam)
         {
-            String keyToUseTmp = "";
             bool keyHandled = false;
             Keys keyData = (Keys)lParam.vkCode;
             // Testing alt+x key pressed
             if (kh.AltHeld)
             {
                 int screenNumKey = -1;
+                if (keyData == Keys.D0) {
+                    keyHandled = true;
+                    int nbOfActiveScreen = numberOfActiveBlackScreen(CommonData.dataInstance.BlackWindows);
+                    // Showing all black screens if number of screens actually shows is less than half of existing screens
+                    if (nbOfActiveScreen <= ((Double)CommonData.dataInstance.BlackWindows.Length/2))
+                    {
+                        showAllBlackWindows(CommonData.dataInstance.BlackWindows);
+                    }
+                    else // Hide all screens
+                    if (nbOfActiveScreen > (CommonData.dataInstance.BlackWindows.Length / 2))
+                    {
+                        hideAllBlackWindows(CommonData.dataInstance.BlackWindows);
+                    }
+                } else
                 if (keyData == Keys.D1)
                 {
                     screenNumKey = 1;
-                    keyToUseTmp = "ALT + 1";
                     keyHandled = true;
                 }
                 else
                 if ((keyData == Keys.D2) && (Screen.AllScreens.Length > 1))
                 {
                     screenNumKey = 2;
-                    keyToUseTmp = "ALT + 2";
                     keyHandled = true;
                 }
                 else
                 if (keyData == Keys.D3 && (Screen.AllScreens.Length > 2))
                 {
                     screenNumKey = 3;
-                    keyToUseTmp = "ALT + 3";
                     keyHandled = true;
                 }
                 else
                 if (keyData == Keys.D4 && (Screen.AllScreens.Length > 3))
                 {
                     screenNumKey = 4;
-                    keyToUseTmp = "ALT + 4";
                     keyHandled = true;
                 }
                 else
                 if (keyData == Keys.D5 && (Screen.AllScreens.Length > 4))
                 {
                     screenNumKey = 5;
-                    keyToUseTmp = "ALT + 5";
                     keyHandled = true;
                 }
                 else
                 if (keyData == Keys.D6 && (Screen.AllScreens.Length > 5))
                 {
                     screenNumKey = 6;
-                    keyToUseTmp = "ALT + 6";
                     keyHandled = true;
                 }
                 // If any valide alt+X key, and screen associated
-                if ((screenNumKey > -1) && (screenNumKey <= Screen.AllScreens.Length))
+                if ((screenNumKey > 0) && (screenNumKey <= Screen.AllScreens.Length))
                 {
                     if (CommonData.dataInstance.BlackWindows[screenNumKey - 1] == null)
                     { // Creating first time BlackWindows for this screen
-                        CommonData.dataInstance.BlackWindows[screenNumKey - 1] = new BlackWindow();
-                        //BlackWindows[screenNumKey - 1].fParams = fParams;
-                        CommonData.dataInstance.BlackWindows[screenNumKey - 1].updateBlackWindowParams();
+                        CommonData.dataInstance.BlackWindows[screenNumKey - 1] = initNewBlackWindow();
                     }
                     BlackWindow currentBlackWindow = CommonData.dataInstance.BlackWindows[screenNumKey - 1];
                     if (currentBlackWindow.IsVisible)
                     { // Hidding black screen window if already visible
-                        currentBlackWindow.HideWindow();
-                        CommonData.dataInstance.FParams.Topmost = false;
+                        hideBlackWindow(currentBlackWindow);
                     }
                     else
                     { // Showing Blackscreen window if not visible
-                        Screen myScreen = Screen.AllScreens[screenNumKey - 1];
-                        Rectangle bounds = myScreen.Bounds;
-                        //currentBlackWindow.Left = bounds.X;
-                        //currentBlackWindow.Top = bounds.Y;
-                        currentBlackWindow.Left = bounds.Left;
-                        currentBlackWindow.Top = bounds.Top;
-                        currentBlackWindow.Height = bounds.Height;
-                        currentBlackWindow.Width = bounds.Width;
-                        currentBlackWindow.KeyToUse = "Use key "+keyToUseTmp+" to switch";
-                        currentBlackWindow.ShowWindow();
-                        // Hidding parameters window if it's on the same black screen to switch visible
-                        if (CommonData.dataInstance.ParamsScreenDeviceName == currentBlackWindow.ScreenDeviceName)
-                        {
-                            CommonData.dataInstance.FParams.WindowState = WindowState.Minimized;
-                        }
+                        showBlackWindow(currentBlackWindow, Screen.AllScreens[screenNumKey - 1], screenNumKey);
                     }
                 }
             }

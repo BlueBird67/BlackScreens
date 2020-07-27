@@ -157,14 +157,14 @@ namespace BlackScreensWPF
         /// </summary>
         public void ShowWindow()
         {
+            this.tbKeyboardHelp.Text = this.KeyToUse;
+            this.Show();
             updateScreenDeviceName();
             this.tbScreenDeviceName.Text = CommonData.dataInstance.findDisplayByScreenName(this.screenDeviceName).FriendlyName;
             Visibility vTexts = CommonData.dataInstance.HideTexts ? Visibility.Hidden : Visibility.Visible;
             tbScreenDeviceName.Visibility = vTexts;
             tbClickHelp.Visibility = vTexts;
             tbKeyboardHelp.Visibility = vTexts;
-            this.tbKeyboardHelp.Text = this.KeyToUse;
-            this.Show();
             launchInfoAnimation();
         }
     }

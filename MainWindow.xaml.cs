@@ -21,7 +21,7 @@ namespace BlackScreensWPF
         public MainWindow()
         {
             InitializeComponent();
-            this.tbTitle.Text = "BlackScreens 1.06";
+            this.tbTitle.Text = "BlackScreens 1.07";
             loadUserConfigFile();
             this.DataContext = CommonData.dataInstance;
             CommonData.dataInstance.FParams = this;
