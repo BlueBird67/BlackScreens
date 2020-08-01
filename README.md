@@ -17,6 +17,8 @@ Main use cases for multiple screens users:
 No installation needed, just launch the executable you can download here https://github.com/BlueBird67/BlackScreens/releases/download/1.7/BlackScreens.exe [Current version 1.7 27/07/2020]
 
 ## Versions
+- v1.08 (01/08/2020)
+  Added mouse cursor disappeared on black screens after 3 sec., parameter in user preferences file. If on 0 (zero), mouse is no more disappearing
 - v1.07 (27/07/2020)
   Adding ALT+0 key to switch all screens
 - v1.06 (25/07/2020)
