@@ -312,6 +312,8 @@
                         <Paragraph Foreground="LightGreen" Margin="0">BlackScreens</Paragraph>
                         <Paragraph Margin="0" xml:space="preserve">      Open Source. Working on Windows 10, up to 6 screens. <Hyperlink PreviewMouseLeftButtonDown="Hyperlink_PreviewMouseLeftButtonDown" NavigateUri="https://github.com/BlueBird67/BlackScreens" Foreground="White" Cursor="Hand">Github link</Hyperlink>.</Paragraph>
                         <Paragraph Foreground="LightGreen" Margin="0 10 0 0">Updates history</Paragraph>
+                        <Paragraph Margin="0">v1.08 (01/08/2020)</Paragraph>
+                        <Paragraph Margin="0" xml:space="preserve">      - Mouse cursor disappear on black windows after 3 seconds (default). Parameter can be changed in user default file.</Paragraph>
                         <Paragraph Margin="0">v1.07 (27/07/2020)</Paragraph>
                         <Paragraph Margin="0" xml:space="preserve">      - Adding ALT+0 key to switch all screens</Paragraph>
                         <Paragraph Margin="0">v1.06 (25/07/2020)</Paragraph>

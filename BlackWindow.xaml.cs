@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace BlackScreensWPF
 {
@@ -12,6 +13,8 @@ namespace BlackScreensWPF
     /// </summary>
     public partial class BlackWindow : Window
     {
+        private int mouseCursorTimerMsCount = 0;
+
         private static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
         private const UInt32 SWP_NOSIZE = 0x0001;
         private const UInt32 SWP_NOMOVE = 0x0002;
@@ -31,6 +34,7 @@ namespace BlackScreensWPF
         private string screenDeviceName = "";
         private Screen currentScreen;
         private string keyToUse;
+        private DispatcherTimer mouseCursorTimer = new DispatcherTimer();
 
         private Storyboard sbClickHelp;
         private Storyboard sbScreenDeviceName;
@@ -89,6 +93,19 @@ namespace BlackScreensWPF
             SetWindowPos(wih.Handle, HWND_TOPMOST, 100, 100, 300, 300, TOPMOST_FLAGS);
             setWindowsClickThrough(false);
             updateScreenDeviceName();
+            mouseCursorTimer.Tick += mouseCursorTimerTick;
+            mouseCursorTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+        }
+
+        private void mouseCursorTimerTick(object sender, EventArgs e)
+        {
+            mouseCursorTimerMsCount += 100;
+            if (mouseCursorTimerMsCount > CommonData.dataInstance.MsDelayMouseCursorHide)
+            {
+                mouseCursorTimer.Stop();
+                this.blackWindow.Cursor = System.Windows.Input.Cursors.None;
+                mouseCursorTimerMsCount = 0;
+            }
         }
 
         private void setWindowsClickThrough(bool clickThrough)
@@ -166,6 +183,18 @@ namespace BlackScreensWPF
             tbClickHelp.Visibility = vTexts;
             tbKeyboardHelp.Visibility = vTexts;
             launchInfoAnimation();
+        }
+
+        private void Window_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            // If mouse delay equal zero, then mouse is always showing
+            if (CommonData.dataInstance.MsDelayMouseCursorHide > 0)
+            {
+                this.blackWindow.Cursor = System.Windows.Input.Cursors.Arrow;
+                mouseCursorTimerMsCount = 0;
+                mouseCursorTimer.Stop();
+                mouseCursorTimer.Start();
+            }
         }
     }
 }

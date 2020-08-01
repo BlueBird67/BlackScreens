@@ -21,7 +21,7 @@ namespace BlackScreensWPF
         public MainWindow()
         {
             InitializeComponent();
-            this.tbTitle.Text = "BlackScreens 1.07";
+            this.tbTitle.Text = "BlackScreens 1.08";
             loadUserConfigFile();
             this.DataContext = CommonData.dataInstance;
             CommonData.dataInstance.FParams = this;
@@ -264,18 +264,21 @@ namespace BlackScreensWPF
             String exeLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             XmlSerializer mySerializer = new XmlSerializer(typeof(UserPreferences));
 
+            // Default values
+            CommonData.dataInstance.ClickThrough = false;
+            CommonData.dataInstance.HideTexts = false;
+            CommonData.dataInstance.Opacity = 90;
+            CommonData.dataInstance.MsDelayMouseCursorHide = 3000;
+
             try { 
                 FileStream myFileStream = new FileStream(exeLocation+"/BlackScreensPrefs.xml", FileMode.Open);
                 up = (UserPreferences)mySerializer.Deserialize(myFileStream);
                 CommonData.dataInstance.Opacity = up.Opacity;
-                CommonData.dataInstance.HideTexts = !up.showTextsOnBlackScreens;
+                CommonData.dataInstance.HideTexts = !up.ShowTextsOnBlackScreens;
                 CommonData.dataInstance.ClickThrough = up.ClickThrough;
+                CommonData.dataInstance.MsDelayMouseCursorHide = up.MsDelayMouseCursorHide;
             }
-            catch (Exception) {
-                CommonData.dataInstance.ClickThrough = false;
-                CommonData.dataInstance.HideTexts = false;
-                CommonData.dataInstance.Opacity = 90;
-            }
+            catch (Exception) { }
         }
 
         /// <summary>
@@ -283,10 +286,13 @@ namespace BlackScreensWPF
         /// </summary>
         private void saveUserConfigFiles()
         {
-            UserPreferences up = new UserPreferences();
-            up.Opacity = CommonData.dataInstance.Opacity;
-            up.showTextsOnBlackScreens = !CommonData.dataInstance.HideTexts;
-            up.ClickThrough = CommonData.dataInstance.ClickThrough;
+            UserPreferences up = new UserPreferences
+            {
+                Opacity = CommonData.dataInstance.Opacity,
+                ShowTextsOnBlackScreens = !CommonData.dataInstance.HideTexts,
+                ClickThrough = CommonData.dataInstance.ClickThrough,
+                MsDelayMouseCursorHide = CommonData.dataInstance.MsDelayMouseCursorHide
+            };
 
             String exeLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             XmlSerializer mySerializer = new XmlSerializer(typeof(UserPreferences));

@@ -33,6 +33,7 @@ namespace BlackScreensWPF
         private Rectangle screen6TooltipData = new Rectangle();
         private bool hideTexts = true;
         private bool clickThrough = false;
+        private int msDelayMouseCursorHide = 3000;
 
         // Users options
         public int Opacity { get => opacity; set => opacity = value; }
@@ -57,6 +58,7 @@ namespace BlackScreensWPF
         public Rectangle Screen4TooltipData { get => screen4TooltipData; set => screen4TooltipData = value; }
         public Rectangle Screen5TooltipData { get => screen5TooltipData; set => screen5TooltipData = value; }
         public Rectangle Screen6TooltipData { get => screen6TooltipData; set => screen6TooltipData = value; }
+        public int MsDelayMouseCursorHide { get => msDelayMouseCursorHide; set => msDelayMouseCursorHide = value; }
 
         /// <summary>
         /// Update all BlackWindows Opacity parameter
