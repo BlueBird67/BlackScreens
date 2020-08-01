@@ -14,7 +14,7 @@ Main use cases for multiple screens users:
 
 ## Download and install
 
-No installation needed, just launch the executable you can download here https://github.com/BlueBird67/BlackScreens/releases/download/1.7/BlackScreens.exe [Current version 1.7 27/07/2020]
+No installation needed, just launch the executable you can download here https://github.com/BlueBird67/BlackScreens/releases/download/1.8/BlackScreens.exe [Current version 1.08 01/08/2020]
 
 ## Versions
 - v1.08 (01/08/2020)
