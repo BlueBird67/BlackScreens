@@ -184,21 +184,21 @@ namespace BlackScreensWPF
 
             Keys k = (Keys)lParam.vkCode;
 
-            //Check for shift(s), alt, and ctrl.
+            // Check for shift(s), alt, and ctrl.
 
-            //Shift
+            // Shift
             if (k == Keys.LShiftKey)
                 bLeftShiftHeld = bShiftHeld = (wParam == WM_KEYDOWN);
             else if (k == Keys.RShiftKey)
                 bRightShiftHeld = bShiftHeld = (wParam == WM_KEYDOWN);
-            //Control
+            // Control
             if ((lParam.vkCode & 0xA2) == 0xA2 || (lParam.vkCode & 0xA3) == 0xA3)
             {
                 bCtrlHeld = (wParam == WM_KEYDOWN);
                 //return 1;
             }
-            //Alt
-            if ((lParam.vkCode & 0xA4) == 0xA4 || (lParam.vkCode & 0xA5) == 0xA5)
+            // 164 mean ALT, 165 mean ALT+GR
+            if (lParam.vkCode == 164)
             {
                 bAltHeld = (wParam == WM_SYSKEYDOWN);
                 //return 1;
