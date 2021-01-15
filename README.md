@@ -14,9 +14,12 @@ Main use cases for multiple screens users:
 
 ## Download and install
 
-Just install the app with the Windows installer you can download here https://github.com/BlueBird67/BlackScreens/releases/download/1.8/BlackScreens.1.8.Setup.msi [Current version 1.08 01/08/2020]
+Just install the app with the Windows installer you can download here https://github.com/BlueBird67/BlackScreens/releases/download/1.9/BlackScreens.1.09.Setup.msi [Current version 1.09 15/01/2021]
 
 ## Versions
+- v1.09 (15/01/2021)
+  Added Windows 10 system scale parameter compatibility
+  Let user use an different image for each of the 3 first screens for darkening, instead of full black color
 - v1.08 (01/08/2020)
   Added mouse cursor disappeared on black screens after 3 sec., parameter in user preferences file. If on 0 (zero), mouse is no more disappearing
 - v1.07 (27/07/2020)
