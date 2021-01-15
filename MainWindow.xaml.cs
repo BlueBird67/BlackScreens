@@ -21,7 +21,7 @@ namespace BlackScreensWPF
         public MainWindow()
         {
             InitializeComponent();
-            this.tbTitle.Text = "BlackScreens 1.08";
+            this.tbTitle.Text = "BlackScreens 1.09";
             loadUserConfigFile();
             this.DataContext = CommonData.dataInstance;
             CommonData.dataInstance.FParams = this;
@@ -71,6 +71,18 @@ namespace BlackScreensWPF
                     CommonData.dataInstance.Screen1Name = display.FriendlyName;
                     tbScreen1Name.GetBindingExpression(TextBlock.TextProperty).UpdateTarget();
                 }
+                // Case of Windows not sending back any screen 1 name 
+                if (CommonData.dataInstance.Screen1Name.Length == 0)
+                {
+                    CommonData.dataInstance.Screen1Name = "No screen name";
+                }
+                // Update label for image usage, instead of black color
+                if (!String.IsNullOrEmpty(CommonData.dataInstance.ImageFileNameScreen1))
+                {
+                    tbScreen1SetImage.Text = "Stop using image";
+                }
+                else
+                    tbScreen1SetImage.Text = "Set image";
             }
             if (Screen.AllScreens.Length > 1)
             {
@@ -80,6 +92,13 @@ namespace BlackScreensWPF
                     CommonData.dataInstance.Screen2Name = display.FriendlyName;
                     tbScreen1Name.GetBindingExpression(TextBlock.TextProperty).UpdateTarget();
                 }
+                // Update label for image usage, instead of black color
+                if (!String.IsNullOrEmpty(CommonData.dataInstance.ImageFileNameScreen2))
+                {
+                    tbScreen2SetImage.Text = "Stop using image";
+                }
+                else
+                    tbScreen2SetImage.Text = "Set image";
             }
             if (Screen.AllScreens.Length > 2)
             {
@@ -89,6 +108,13 @@ namespace BlackScreensWPF
                     CommonData.dataInstance.Screen3Name = display.FriendlyName;
                     tbScreen1Name.GetBindingExpression(TextBlock.TextProperty).UpdateTarget();
                 }
+                // Update label for image usage, instead of black color
+                if (!String.IsNullOrEmpty(CommonData.dataInstance.ImageFileNameScreen3))
+                {
+                    tbScreen3SetImage.Text = "Stop using image";
+                }
+                else
+                    tbScreen3SetImage.Text = "Set image";
             }
             if (Screen.AllScreens.Length > 3)
             {
@@ -121,7 +147,11 @@ namespace BlackScreensWPF
                 }
             }
             tbScreen2AltKeyInfo.Visibility = (Screen.AllScreens.Length > 1) ? Visibility.Visible : Visibility.Hidden;
+            tbScreen2Name.Visibility = (Screen.AllScreens.Length > 1) ? Visibility.Visible : Visibility.Collapsed;
+            tbScreen2SetImage.Visibility = (Screen.AllScreens.Length > 1) ? Visibility.Visible : Visibility.Collapsed;
             tbScreen3AltKeyInfo.Visibility = (Screen.AllScreens.Length > 2) ? Visibility.Visible : Visibility.Hidden;
+            tbScreen3Name.Visibility = (Screen.AllScreens.Length > 2) ? Visibility.Visible : Visibility.Collapsed;
+            tbScreen3SetImage.Visibility = (Screen.AllScreens.Length > 2) ? Visibility.Visible : Visibility.Collapsed;
             tbScreen4AltKeyInfo.Visibility = (Screen.AllScreens.Length > 3) ? Visibility.Visible : Visibility.Hidden;
             // Collapsed used to hide complete line (screen 4,5,6) if there is not at least 4 screens used (presume large majority of users cases!)
             tbScreen4Name.Visibility = (Screen.AllScreens.Length > 3) ? Visibility.Visible : Visibility.Collapsed;
@@ -269,6 +299,12 @@ namespace BlackScreensWPF
             CommonData.dataInstance.HideTexts = false;
             CommonData.dataInstance.Opacity = 90;
             CommonData.dataInstance.MsDelayMouseCursorHide = 3000;
+            CommonData.dataInstance.ImageFileNameScreen1 = "";
+            CommonData.dataInstance.ImageFileNameScreen2 = "";
+            CommonData.dataInstance.ImageFileNameScreen3 = "";
+            CommonData.dataInstance.ImageFileNameScreen4 = "";
+            CommonData.dataInstance.ImageFileNameScreen5 = "";
+            CommonData.dataInstance.ImageFileNameScreen6 = "";
 
             try { 
                 FileStream myFileStream = new FileStream(exeLocation+"/BlackScreensPrefs.xml", FileMode.Open);
@@ -277,6 +313,12 @@ namespace BlackScreensWPF
                 CommonData.dataInstance.HideTexts = !up.ShowTextsOnBlackScreens;
                 CommonData.dataInstance.ClickThrough = up.ClickThrough;
                 CommonData.dataInstance.MsDelayMouseCursorHide = up.MsDelayMouseCursorHide;
+                CommonData.dataInstance.ImageFileNameScreen1 = up.ImageFileNameScreen1;
+                CommonData.dataInstance.ImageFileNameScreen2 = up.ImageFileNameScreen2;
+                CommonData.dataInstance.ImageFileNameScreen3 = up.ImageFileNameScreen3;
+                CommonData.dataInstance.ImageFileNameScreen4 = up.ImageFileNameScreen4;
+                CommonData.dataInstance.ImageFileNameScreen5 = up.ImageFileNameScreen5;
+                CommonData.dataInstance.ImageFileNameScreen6 = up.ImageFileNameScreen6;
             }
             catch (Exception) { }
         }
@@ -291,7 +333,13 @@ namespace BlackScreensWPF
                 Opacity = CommonData.dataInstance.Opacity,
                 ShowTextsOnBlackScreens = !CommonData.dataInstance.HideTexts,
                 ClickThrough = CommonData.dataInstance.ClickThrough,
-                MsDelayMouseCursorHide = CommonData.dataInstance.MsDelayMouseCursorHide
+                MsDelayMouseCursorHide = CommonData.dataInstance.MsDelayMouseCursorHide,
+                ImageFileNameScreen1 = CommonData.dataInstance.ImageFileNameScreen1,
+                ImageFileNameScreen2 = CommonData.dataInstance.ImageFileNameScreen2,
+                ImageFileNameScreen3 = CommonData.dataInstance.ImageFileNameScreen3,
+                ImageFileNameScreen4 = CommonData.dataInstance.ImageFileNameScreen4,
+                ImageFileNameScreen5 = CommonData.dataInstance.ImageFileNameScreen5,
+                ImageFileNameScreen6 = CommonData.dataInstance.ImageFileNameScreen6
             };
 
             String exeLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
@@ -304,10 +352,10 @@ namespace BlackScreensWPF
             catch (Exception) { }
         }
 
-        private String debugOneScreenToString(System.Drawing.Rectangle r, String screenName)
+        private String debugOneScreenToString(System.Drawing.Rectangle r, String screenName, int screenNumber)
         {
             String txt = "";
-            txt += "Screen 1 : " + screenName + Environment.NewLine;
+            txt += "Screen " + screenNumber + " : " + screenName + Environment.NewLine;
             txt += "Left " + r.Left + " / X = " + r.X + Environment.NewLine;
             txt += "Top " + r.Top + " / Y = " + r.Y + Environment.NewLine;
             txt += "Right " + r.Right + " / Width = " + r.Width + Environment.NewLine;
@@ -326,23 +374,23 @@ namespace BlackScreensWPF
             String debugTxt = "";
             if (Screen.AllScreens.Length > 0)
             {
-                debugTxt += debugOneScreenToString(CommonData.dataInstance.Screen1TooltipData, CommonData.dataInstance.Screen1Name);
+                debugTxt += debugOneScreenToString(CommonData.dataInstance.Screen1TooltipData, CommonData.dataInstance.Screen1Name, 1);
             }
             if (Screen.AllScreens.Length > 1)
             {
-                debugTxt += debugOneScreenToString(CommonData.dataInstance.Screen2TooltipData, CommonData.dataInstance.Screen2Name);
+                debugTxt += debugOneScreenToString(CommonData.dataInstance.Screen2TooltipData, CommonData.dataInstance.Screen2Name, 2);
                 if (Screen.AllScreens.Length > 2)
                 {
-                    debugTxt += debugOneScreenToString(CommonData.dataInstance.Screen3TooltipData, CommonData.dataInstance.Screen3Name);
+                    debugTxt += debugOneScreenToString(CommonData.dataInstance.Screen3TooltipData, CommonData.dataInstance.Screen3Name, 3);
                     if (Screen.AllScreens.Length > 3)
                     {
-                        debugTxt += debugOneScreenToString(CommonData.dataInstance.Screen4TooltipData, CommonData.dataInstance.Screen4Name);
+                        debugTxt += debugOneScreenToString(CommonData.dataInstance.Screen4TooltipData, CommonData.dataInstance.Screen4Name, 4);
                         if (Screen.AllScreens.Length > 4)
                         {
-                            debugTxt += debugOneScreenToString(CommonData.dataInstance.Screen5TooltipData, CommonData.dataInstance.Screen5Name);
+                            debugTxt += debugOneScreenToString(CommonData.dataInstance.Screen5TooltipData, CommonData.dataInstance.Screen5Name, 5);
                             if (Screen.AllScreens.Length > 5)
                             {
-                                debugTxt += debugOneScreenToString(CommonData.dataInstance.Screen6TooltipData, CommonData.dataInstance.Screen6Name);
+                                debugTxt += debugOneScreenToString(CommonData.dataInstance.Screen6TooltipData, CommonData.dataInstance.Screen6Name, 6);
                             }
                         }
                     }
@@ -381,6 +429,50 @@ namespace BlackScreensWPF
 
         private void cbClickThrough_Click(object sender, RoutedEventArgs e)
         {
+            CommonData.dataInstance.updateAllBlackWindowParams();
+        }
+
+        private void changeImage(TextBlock tbImageButton, string screenName, out String imageName)
+        {
+            imageName = "";
+            if (tbImageButton.Text == "Set image")
+            {
+                System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog();
+                openFileDialog.Filter = "Image Files (*.png;*.jpg)|*.png;*.jpg";
+                openFileDialog.Title = "Image file to use for "+ screenName;
+                if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    imageName = openFileDialog.FileName;
+                    tbImageButton.Text = "Stop using image";
+                }
+            }
+            else
+            {
+                tbImageButton.Text = "Set image";
+            }
+        }
+
+        private void tbScreen1SetImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            String imageFileName = CommonData.dataInstance.ImageFileNameScreen1;
+            changeImage(tbScreen1SetImage, "screen 1", out imageFileName);
+            CommonData.dataInstance.ImageFileNameScreen1 = imageFileName;
+            CommonData.dataInstance.updateAllBlackWindowParams();
+        }
+
+        private void tbScreen2SetImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            String imageFileName = CommonData.dataInstance.ImageFileNameScreen2;
+            changeImage(tbScreen2SetImage, "screen 2", out imageFileName);
+            CommonData.dataInstance.ImageFileNameScreen2 = imageFileName;
+            CommonData.dataInstance.updateAllBlackWindowParams();
+        }
+
+        private void tbScreen3SetImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            String imageFileName = CommonData.dataInstance.ImageFileNameScreen2;
+            changeImage(tbScreen3SetImage, "screen 3", out imageFileName);
+            CommonData.dataInstance.ImageFileNameScreen3 = imageFileName;
             CommonData.dataInstance.updateAllBlackWindowParams();
         }
     }

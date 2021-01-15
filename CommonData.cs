@@ -21,6 +21,12 @@ namespace BlackScreensWPF
         private string screen4Name = "";
         private string screen5Name = "";
         private string screen6Name = "";
+        private string imageFileNameScreen1 = "";
+        private string imageFileNameScreen2 = "";
+        private string imageFileNameScreen3 = "";
+        private string imageFileNameScreen4 = "";
+        private string imageFileNameScreen5 = "";
+        private string imageFileNameScreen6 = "";
         private string paramsScreenDeviceName = "";
         private MainWindow fParams = null;
         private BlackWindow[] blackWindows = new BlackWindow[Screen.AllScreens.Length];
@@ -46,9 +52,15 @@ namespace BlackScreensWPF
         public string Screen4Name { get => screen4Name; set => screen4Name = value; }
         public string Screen5Name { get => screen5Name; set => screen5Name = value; }
         public string Screen6Name { get => screen6Name; set => screen6Name = value; }
+        public String ImageFileNameScreen1 { get => imageFileNameScreen1; set => imageFileNameScreen1 = value; }
+        public String ImageFileNameScreen2 { get => imageFileNameScreen2; set => imageFileNameScreen2 = value; }
+        public String ImageFileNameScreen3 { get => imageFileNameScreen3; set => imageFileNameScreen3 = value; }
+        public String ImageFileNameScreen4 { get => imageFileNameScreen4; set => imageFileNameScreen4 = value; }
+        public String ImageFileNameScreen5 { get => imageFileNameScreen5; set => imageFileNameScreen5 = value; }
+        public String ImageFileNameScreen6 { get => imageFileNameScreen6; set => imageFileNameScreen6 = value; }
         // Keep MainWindow handle, use in BlackWindows and App.cs
         public MainWindow FParams { get => fParams; set => fParams = value; }
-        // BlackWindows used for each screen
+        // BlackWindow used for each screen
         public BlackWindow[] BlackWindows { get => blackWindows; set => blackWindows = value; }
         public string ParamsScreenDeviceName { get => paramsScreenDeviceName; set => paramsScreenDeviceName = value; }
         public PathDisplayTarget[] Displays { get => displays; set => displays = value; }

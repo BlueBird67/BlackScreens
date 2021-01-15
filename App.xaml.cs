@@ -32,6 +32,8 @@ namespace BlackScreensWPF
             CommonData.dataInstance.Screen5TooltipData = (Screen.AllScreens.Length > 4) ? Screen.AllScreens[4].Bounds : new Rectangle();
             CommonData.dataInstance.Screen6TooltipData = (Screen.AllScreens.Length > 5) ? Screen.AllScreens[5].Bounds : new Rectangle();
 
+            //bool result = System.Windows.UI.ViewManagement.ApplicationViewScaling.TrySetDisableLayoutScaling(true);
+
             // Hook for listen to Windows Keys
             kh = new KeyboardHook(false);
             kh.KeyDown += Kh_KeyDown;
@@ -68,10 +70,11 @@ namespace BlackScreensWPF
         /// Init a new BlackWindow
         /// </summary>
         /// <returns></returns>
-        private BlackWindow initNewBlackWindow()
+        private BlackWindow initNewBlackWindow(int screenNumber)
         {
             // Creating first time BlackWindows for this screen
             BlackWindow bw = new BlackWindow();
+            bw.ScreenNumber = screenNumber;
             bw.updateBlackWindowParams();
             return bw;
         }
@@ -106,6 +109,7 @@ namespace BlackScreensWPF
             bwToShow.Height = bounds.Height;
             bwToShow.Width = bounds.Width;
             bwToShow.KeyToUse = "Use key " + textAltToShow + " to switch";
+            bwToShow.ScreenNumber = bwNumber;
             bwToShow.ShowWindow();
             // Hidding parameters window if it's on the same black screen to switch visible
             if (CommonData.dataInstance.ParamsScreenDeviceName == bwToShow.ScreenDeviceName)
@@ -123,7 +127,7 @@ namespace BlackScreensWPF
             for (int iBw=0; iBw < blackWindows.Length; iBw++)
             {
                 if (blackWindows[iBw] == null)
-                    blackWindows[iBw] = initNewBlackWindow();
+                    blackWindows[iBw] = initNewBlackWindow(iBw+1);
                 showBlackWindow(blackWindows[iBw], Screen.AllScreens[iBw], iBw+1);
             }
         }
@@ -202,7 +206,7 @@ namespace BlackScreensWPF
                 {
                     if (CommonData.dataInstance.BlackWindows[screenNumKey - 1] == null)
                     { // Creating first time BlackWindows for this screen
-                        CommonData.dataInstance.BlackWindows[screenNumKey - 1] = initNewBlackWindow();
+                        CommonData.dataInstance.BlackWindows[screenNumKey - 1] = initNewBlackWindow(screenNumKey);
                     }
                     BlackWindow currentBlackWindow = CommonData.dataInstance.BlackWindows[screenNumKey - 1];
                     if (currentBlackWindow.IsVisible)

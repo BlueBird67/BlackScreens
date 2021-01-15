@@ -3,7 +3,9 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
 namespace BlackScreensWPF
@@ -32,6 +34,7 @@ namespace BlackScreensWPF
         public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
 
         private string screenDeviceName = "";
+        private int screenNumber = -1;
         private Screen currentScreen;
         private string keyToUse;
         private DispatcherTimer mouseCursorTimer = new DispatcherTimer();
@@ -40,15 +43,23 @@ namespace BlackScreensWPF
         private Storyboard sbScreenDeviceName;
         private Storyboard sbKeyboardHelp;
 
+        public int ScreenNumber { get => screenNumber; set => screenNumber = value; }
         public string ScreenDeviceName { get => screenDeviceName; set => screenDeviceName = value; }
         public string KeyToUse { get => keyToUse; set => keyToUse = value; }
+        public System.Windows.DpiScale currentDpi { get => getScreenDPI(); }
 
         public BlackWindow()
         {
             InitializeComponent();
             updateScreenDeviceName();
             this.DataContext = CommonData.dataInstance;
-            createAllStoryBoards();
+            createAllStoryBoards();            
+        }
+
+        public System.Windows.DpiScale getScreenDPI()
+        {
+            System.Windows.DpiScale tmpDpi = VisualTreeHelper.GetDpi(this as Visual);
+            return tmpDpi;
         }
 
         /// <summary>
@@ -74,6 +85,25 @@ namespace BlackScreensWPF
         {
             this.Opacity = (Double)(CommonData.dataInstance.Opacity) / 100;
             setWindowsClickThrough(CommonData.dataInstance.ClickThrough);
+            string imageNameToUse = "";
+            switch (this.screenNumber)
+            {
+                case 1: imageNameToUse = CommonData.dataInstance.ImageFileNameScreen1; break;
+                case 2: imageNameToUse = CommonData.dataInstance.ImageFileNameScreen2; break;
+                case 3: imageNameToUse = CommonData.dataInstance.ImageFileNameScreen3; break;
+                case 4: imageNameToUse = CommonData.dataInstance.ImageFileNameScreen4; break;
+                case 5: imageNameToUse = CommonData.dataInstance.ImageFileNameScreen5; break;
+                case 6: imageNameToUse = CommonData.dataInstance.ImageFileNameScreen6; break;
+            }
+            if (!String.IsNullOrEmpty(imageNameToUse))
+            {
+                ImageBrush imageBrush = new ImageBrush(new BitmapImage(new Uri(imageNameToUse, UriKind.RelativeOrAbsolute)));
+                this.Background = imageBrush;
+            }
+            else
+            {
+                this.Background = new SolidColorBrush(System.Windows.Media.Colors.Black);
+            }
         }
 
         /// <summary>
@@ -183,6 +213,12 @@ namespace BlackScreensWPF
             tbClickHelp.Visibility = vTexts;
             tbKeyboardHelp.Visibility = vTexts;
             launchInfoAnimation();
+            // Trying to correct Windows system DPI scale for screens, but not working
+            // What worked is updating the app.manifest with 
+            // <dpiAwareness xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings">unaware</dpiAwareness>
+            /*DpiScale currentDpi = this.getScreenDPI();
+            this.Height = this.Height / currentDpi.DpiScaleY;
+            this.Width = this.Width / currentDpi.DpiScaleX;*/
         }
 
         private void Window_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
