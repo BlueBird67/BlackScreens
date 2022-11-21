@@ -1,6 +1,6 @@
 # Windows BlackScreens Application
 
-BlackScreens is a Windows 10 Application that let you darken any of your current screen with simple keyboard shortcut switch: 
+BlackScreens is a Windows 10/11 Application that let you darken any of your current screen with simple keyboard shortcut switch: 
 
       Alt+1 --> Alt+6         Alt+0 to switch all screens at once
 
@@ -18,7 +18,7 @@ Just install the app with the Windows installer you can download here https://gi
 
 ## Versions
 - v1.09 (15/01/2021)
-  Added Windows 10 system scale parameter compatibility
+  Added Windows 10/11 system scale parameter compatibility
   Let user use an different image for each of the 3 first screens for darkening, instead of full black color
 - v1.08 (01/08/2020)
   Added mouse cursor disappeared on black screens after 3 sec., parameter in user preferences file. If on 0 (zero), mouse is no more disappearing
@@ -32,7 +32,7 @@ Just install the app with the Windows installer you can download here https://gi
 
 ## Tests
 
-This App has been tested already on Windows 10 lastest officials builds on jully 2020, with 2 different screens.
+This App has been tested already on Windows 10 and 11 lastest officials builds on november 2022, with 2 different screens.
 
 BlackScreens works with DotNet 4.8. It has been built with Visual Studio 2019 Community edition.
 
