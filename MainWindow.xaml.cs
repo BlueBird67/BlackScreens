@@ -17,17 +17,19 @@ namespace BlackScreensWPF
     public partial class MainWindow : Window
     {
         private event EventHandler Resized;
+        private bool hideAfterloadUserConfigFile = false;
 
         public MainWindow()
         {
             InitializeComponent();
-            this.tbTitle.Text = "BlackScreens 1.10";
+            this.tbTitle.Text = "BlackScreens 1.11";
             loadUserConfigFile();
             this.DataContext = CommonData.dataInstance;
             CommonData.dataInstance.FParams = this;
             notifyIcon.TrayLeftMouseDown += NotifyIcon_TrayLeftMouseDown;
             refreshMainWindowCurrentScreen();
             updateScreenNames();
+            this.WindowState = hideAfterloadUserConfigFile ? WindowState.Minimized : WindowState.Normal;
         }
 
         /// <summary>
@@ -326,7 +328,7 @@ namespace BlackScreensWPF
             }
             catch (Exception) { }
 
-            this.WindowState = CommonData.dataInstance.ReduceAppOnLaunch ? WindowState.Minimized : WindowState.Normal;
+            this.hideAfterloadUserConfigFile = CommonData.dataInstance.ReduceAppOnLaunch;
 
             if (CommonData.dataInstance.FirstAppLaunch)
             {
