@@ -21,7 +21,7 @@ namespace BlackScreensWPF
         public MainWindow()
         {
             InitializeComponent();
-            this.tbTitle.Text = "BlackScreens 1.09";
+            this.tbTitle.Text = "BlackScreens 1.10";
             loadUserConfigFile();
             this.DataContext = CommonData.dataInstance;
             CommonData.dataInstance.FParams = this;
@@ -163,7 +163,6 @@ namespace BlackScreensWPF
 
         private void showWindow()
         {
-            //updateScreenNames();
             this.Topmost = true;
             this.Show();
             this.WindowState = WindowState.Normal;
@@ -188,6 +187,7 @@ namespace BlackScreensWPF
         {
             if (this.WindowState == WindowState.Normal)
             {
+                this.Width = 800;
                 this.ShowInTaskbar = true;
                 refreshMainWindowCurrentScreen();
             }
@@ -299,6 +299,8 @@ namespace BlackScreensWPF
             CommonData.dataInstance.HideTexts = false;
             CommonData.dataInstance.Opacity = 90;
             CommonData.dataInstance.MsDelayMouseCursorHide = 3000;
+            CommonData.dataInstance.ReduceAppOnLaunch = false;
+            CommonData.dataInstance.FirstAppLaunch = true;
             CommonData.dataInstance.ImageFileNameScreen1 = "";
             CommonData.dataInstance.ImageFileNameScreen2 = "";
             CommonData.dataInstance.ImageFileNameScreen3 = "";
@@ -312,6 +314,8 @@ namespace BlackScreensWPF
                 CommonData.dataInstance.Opacity = up.Opacity;
                 CommonData.dataInstance.HideTexts = !up.ShowTextsOnBlackScreens;
                 CommonData.dataInstance.ClickThrough = up.ClickThrough;
+                CommonData.dataInstance.ReduceAppOnLaunch = up.ReduceAppOnLaunch;
+                CommonData.dataInstance.FirstAppLaunch = up.FirstAppLaunch;
                 CommonData.dataInstance.MsDelayMouseCursorHide = up.MsDelayMouseCursorHide;
                 CommonData.dataInstance.ImageFileNameScreen1 = up.ImageFileNameScreen1;
                 CommonData.dataInstance.ImageFileNameScreen2 = up.ImageFileNameScreen2;
@@ -321,6 +325,14 @@ namespace BlackScreensWPF
                 CommonData.dataInstance.ImageFileNameScreen6 = up.ImageFileNameScreen6;
             }
             catch (Exception) { }
+
+            this.WindowState = CommonData.dataInstance.ReduceAppOnLaunch ? WindowState.Minimized : WindowState.Normal;
+
+            if (CommonData.dataInstance.FirstAppLaunch)
+            {
+                CommonData.dataInstance.FirstAppLaunch = false;
+                saveUserConfigFiles();
+            }
         }
 
         /// <summary>
@@ -334,6 +346,8 @@ namespace BlackScreensWPF
                 ShowTextsOnBlackScreens = !CommonData.dataInstance.HideTexts,
                 ClickThrough = CommonData.dataInstance.ClickThrough,
                 MsDelayMouseCursorHide = CommonData.dataInstance.MsDelayMouseCursorHide,
+                FirstAppLaunch = CommonData.dataInstance.FirstAppLaunch,
+                ReduceAppOnLaunch = CommonData.dataInstance.ReduceAppOnLaunch,
                 ImageFileNameScreen1 = CommonData.dataInstance.ImageFileNameScreen1,
                 ImageFileNameScreen2 = CommonData.dataInstance.ImageFileNameScreen2,
                 ImageFileNameScreen3 = CommonData.dataInstance.ImageFileNameScreen3,
@@ -428,6 +442,11 @@ namespace BlackScreensWPF
         }
 
         private void cbClickThrough_Click(object sender, RoutedEventArgs e)
+        {
+            CommonData.dataInstance.updateAllBlackWindowParams();
+        }
+
+        private void cbHideOnTaskBarOnStart_Click(object sender, RoutedEventArgs e)
         {
             CommonData.dataInstance.updateAllBlackWindowParams();
         }

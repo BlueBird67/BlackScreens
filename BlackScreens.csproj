@@ -59,10 +59,10 @@
     <ApplicationIcon>moon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>05A4EE4551FAE8E843B5C80EAD70F3CF0B443481</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>E3C12712D0AB0BB9322D911FAB03CB579EF78075</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>BlackScreensWPF_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>BlackScreen072023.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -260,7 +260,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.manifest" />
-    <None Include="BlackScreensWPF_TemporaryKey.pfx" />
+    <None Include="BlackScreen072023.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

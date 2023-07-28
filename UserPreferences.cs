@@ -30,6 +30,20 @@
             set { _MsDelayMouseCursorHide = value; }
         }
 
+        internal bool _ReduceAppOnLaunch = false;
+        public bool ReduceAppOnLaunch
+        {
+            get { return _ReduceAppOnLaunch; }
+            set { _ReduceAppOnLaunch = value; }
+        }
+
+        internal bool _FirstAppLaunch = true;
+        public bool FirstAppLaunch
+        {
+            get { return _FirstAppLaunch; }
+            set { _FirstAppLaunch = value; }
+        }
+
         internal string _ImageFileNameScreen1 = "";
         public string ImageFileNameScreen1
         {

@@ -39,12 +39,16 @@ namespace BlackScreensWPF
         private Rectangle screen6TooltipData = new Rectangle();
         private bool hideTexts = true;
         private bool clickThrough = false;
+        private bool reduceAppOnLaunch = false;
+        private bool firstAppLaunch = true;
         private int msDelayMouseCursorHide = 3000;
 
         // Users options
         public int Opacity { get => opacity; set => opacity = value; }
         public bool HideTexts { get => hideTexts; set => hideTexts = value; }
         public bool ClickThrough { get => clickThrough; set => clickThrough = value; }
+        public bool ReduceAppOnLaunch { get => reduceAppOnLaunch; set => reduceAppOnLaunch = value; }
+        public bool FirstAppLaunch { get => firstAppLaunch; set => firstAppLaunch = value; }
 
         public string Screen1Name { get => screen1Name; set => screen1Name = value; }
         public string Screen2Name { get => screen2Name; set => screen2Name = value; }
