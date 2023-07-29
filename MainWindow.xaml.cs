@@ -17,19 +17,16 @@ namespace BlackScreensWPF
     public partial class MainWindow : Window
     {
         private event EventHandler Resized;
-        private bool hideAfterloadUserConfigFile = false;
 
         public MainWindow()
         {
+            CommonData.dataInstance.LogToFile.Debug("MainWindow()");
             InitializeComponent();
-            this.tbTitle.Text = "BlackScreens 1.11";
-            loadUserConfigFile();
+            this.tbTitle.Text = "BlackScreens 1.12";
             this.DataContext = CommonData.dataInstance;
-            CommonData.dataInstance.FParams = this;
             notifyIcon.TrayLeftMouseDown += NotifyIcon_TrayLeftMouseDown;
             refreshMainWindowCurrentScreen();
             updateScreenNames();
-            this.WindowState = hideAfterloadUserConfigFile ? WindowState.Minimized : WindowState.Normal;
         }
 
         /// <summary>
@@ -37,6 +34,7 @@ namespace BlackScreensWPF
         /// </summary>
         public void refreshMainWindowCurrentScreen()
         {
+            CommonData.dataInstance.LogToFile.Debug("refreshMainWindowCurrentScreen()");
             System.Windows.Interop.WindowInteropHelper wih = new System.Windows.Interop.WindowInteropHelper(this);
             Screen currentScreen = Screen.FromHandle(wih.Handle);
             CommonData.dataInstance.ParamsScreenDeviceName = currentScreen.DeviceName;
@@ -54,7 +52,7 @@ namespace BlackScreensWPF
             }
         }
 
-        private void minimizeWindow()
+        public void minimizeWindow()
         {
             this.WindowState = WindowState.Minimized;
             this.ShowInTaskbar = false;
@@ -65,6 +63,7 @@ namespace BlackScreensWPF
         /// </summary>
         private void updateScreenNames()
         {
+            CommonData.dataInstance.LogToFile.Debug("updateScreenNames()");
             if (Screen.AllScreens.Length > 0)
             {
                 PathDisplayTarget display = CommonData.dataInstance.findDisplayByScreenName(Screen.AllScreens[0].DeviceName);
@@ -163,11 +162,12 @@ namespace BlackScreensWPF
             tbScreen6Name.Visibility = (Screen.AllScreens.Length > 5) ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        private void showWindow()
+        public void showWindow()
         {
             this.Topmost = true;
-            this.Show();
             this.WindowState = WindowState.Normal;
+            this.ShowInTaskbar = true;
+            this.Show();
         }
 
         private void OnMinimizeButtonClick(object sender, RoutedEventArgs e)
@@ -283,89 +283,7 @@ namespace BlackScreensWPF
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            saveUserConfigFiles();
-        }
-
-        /// <summary>
-        /// Load user config file by XmlSerializer
-        /// </summary>
-        private void loadUserConfigFile()
-        {
-            UserPreferences up;
-
-            String exeLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            XmlSerializer mySerializer = new XmlSerializer(typeof(UserPreferences));
-
-            // Default values
-            CommonData.dataInstance.ClickThrough = false;
-            CommonData.dataInstance.HideTexts = false;
-            CommonData.dataInstance.Opacity = 90;
-            CommonData.dataInstance.MsDelayMouseCursorHide = 3000;
-            CommonData.dataInstance.ReduceAppOnLaunch = false;
-            CommonData.dataInstance.FirstAppLaunch = true;
-            CommonData.dataInstance.ImageFileNameScreen1 = "";
-            CommonData.dataInstance.ImageFileNameScreen2 = "";
-            CommonData.dataInstance.ImageFileNameScreen3 = "";
-            CommonData.dataInstance.ImageFileNameScreen4 = "";
-            CommonData.dataInstance.ImageFileNameScreen5 = "";
-            CommonData.dataInstance.ImageFileNameScreen6 = "";
-
-            try { 
-                FileStream myFileStream = new FileStream(exeLocation+"/BlackScreensPrefs.xml", FileMode.Open);
-                up = (UserPreferences)mySerializer.Deserialize(myFileStream);
-                CommonData.dataInstance.Opacity = up.Opacity;
-                CommonData.dataInstance.HideTexts = !up.ShowTextsOnBlackScreens;
-                CommonData.dataInstance.ClickThrough = up.ClickThrough;
-                CommonData.dataInstance.ReduceAppOnLaunch = up.ReduceAppOnLaunch;
-                CommonData.dataInstance.FirstAppLaunch = up.FirstAppLaunch;
-                CommonData.dataInstance.MsDelayMouseCursorHide = up.MsDelayMouseCursorHide;
-                CommonData.dataInstance.ImageFileNameScreen1 = up.ImageFileNameScreen1;
-                CommonData.dataInstance.ImageFileNameScreen2 = up.ImageFileNameScreen2;
-                CommonData.dataInstance.ImageFileNameScreen3 = up.ImageFileNameScreen3;
-                CommonData.dataInstance.ImageFileNameScreen4 = up.ImageFileNameScreen4;
-                CommonData.dataInstance.ImageFileNameScreen5 = up.ImageFileNameScreen5;
-                CommonData.dataInstance.ImageFileNameScreen6 = up.ImageFileNameScreen6;
-            }
-            catch (Exception) { }
-
-            this.hideAfterloadUserConfigFile = CommonData.dataInstance.ReduceAppOnLaunch;
-
-            if (CommonData.dataInstance.FirstAppLaunch)
-            {
-                CommonData.dataInstance.FirstAppLaunch = false;
-                saveUserConfigFiles();
-            }
-        }
-
-        /// <summary>
-        /// Save user config file by XmlSerializer
-        /// </summary>
-        private void saveUserConfigFiles()
-        {
-            UserPreferences up = new UserPreferences
-            {
-                Opacity = CommonData.dataInstance.Opacity,
-                ShowTextsOnBlackScreens = !CommonData.dataInstance.HideTexts,
-                ClickThrough = CommonData.dataInstance.ClickThrough,
-                MsDelayMouseCursorHide = CommonData.dataInstance.MsDelayMouseCursorHide,
-                FirstAppLaunch = CommonData.dataInstance.FirstAppLaunch,
-                ReduceAppOnLaunch = CommonData.dataInstance.ReduceAppOnLaunch,
-                ImageFileNameScreen1 = CommonData.dataInstance.ImageFileNameScreen1,
-                ImageFileNameScreen2 = CommonData.dataInstance.ImageFileNameScreen2,
-                ImageFileNameScreen3 = CommonData.dataInstance.ImageFileNameScreen3,
-                ImageFileNameScreen4 = CommonData.dataInstance.ImageFileNameScreen4,
-                ImageFileNameScreen5 = CommonData.dataInstance.ImageFileNameScreen5,
-                ImageFileNameScreen6 = CommonData.dataInstance.ImageFileNameScreen6
-            };
-
-            String exeLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            XmlSerializer mySerializer = new XmlSerializer(typeof(UserPreferences));
-            try { 
-                StreamWriter myWriter = new StreamWriter(exeLocation + "/BlackScreensPrefs.xml");
-                mySerializer.Serialize(myWriter, up);
-                myWriter.Close();
-            }
-            catch (Exception) { }
+            CommonData.dataInstance.saveUserConfigFiles();
         }
 
         private String debugOneScreenToString(System.Drawing.Rectangle r, String screenName, int screenNumber)

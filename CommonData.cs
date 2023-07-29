@@ -5,8 +5,15 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.ApplicationServices;
 using System.Windows.Forms;
 using WindowsDisplayAPI.DisplayConfig;
+using NLog;
+
+using System.Xml.Linq;
+using NLog.Config;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace BlackScreensWPF
 {
@@ -42,6 +49,8 @@ namespace BlackScreensWPF
         private bool reduceAppOnLaunch = false;
         private bool firstAppLaunch = true;
         private int msDelayMouseCursorHide = 3000;
+        private Logger logToFile = NLog.LogManager.GetCurrentClassLogger();
+        private string optionFileLocation = "";
 
         // Users options
         public int Opacity { get => opacity; set => opacity = value; }
@@ -75,6 +84,16 @@ namespace BlackScreensWPF
         public Rectangle Screen5TooltipData { get => screen5TooltipData; set => screen5TooltipData = value; }
         public Rectangle Screen6TooltipData { get => screen6TooltipData; set => screen6TooltipData = value; }
         public int MsDelayMouseCursorHide { get => msDelayMouseCursorHide; set => msDelayMouseCursorHide = value; }
+        public string OptionFileLocation { get => optionFileLocation; set => optionFileLocation = value; }
+        public Logger LogToFile
+        {
+            get => logToFile; set => logToFile = value;
+        }
+
+        static CommonData()
+        {
+            dataInstance.LogToFile.Debug("Creating CommonData static instance");
+        }
 
         /// <summary>
         /// Update all BlackWindows Opacity parameter
@@ -107,6 +126,93 @@ namespace BlackScreensWPF
                 }
             }
             return null;
+        }
+
+        /// <summary>
+        /// Save user config file by XmlSerializer
+        /// </summary>
+        public void saveUserConfigFiles()
+        {
+            UserPreferences up = new UserPreferences
+            {
+                Opacity = CommonData.dataInstance.Opacity,
+                ShowTextsOnBlackScreens = !CommonData.dataInstance.HideTexts,
+                ClickThrough = CommonData.dataInstance.ClickThrough,
+                MsDelayMouseCursorHide = CommonData.dataInstance.MsDelayMouseCursorHide,
+                FirstAppLaunch = CommonData.dataInstance.FirstAppLaunch,
+                ReduceAppOnLaunch = CommonData.dataInstance.ReduceAppOnLaunch,
+                ImageFileNameScreen1 = CommonData.dataInstance.ImageFileNameScreen1,
+                ImageFileNameScreen2 = CommonData.dataInstance.ImageFileNameScreen2,
+                ImageFileNameScreen3 = CommonData.dataInstance.ImageFileNameScreen3,
+                ImageFileNameScreen4 = CommonData.dataInstance.ImageFileNameScreen4,
+                ImageFileNameScreen5 = CommonData.dataInstance.ImageFileNameScreen5,
+                ImageFileNameScreen6 = CommonData.dataInstance.ImageFileNameScreen6
+            };
+
+            String exeLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            XmlSerializer mySerializer = new XmlSerializer(typeof(UserPreferences));
+            try
+            {
+                StreamWriter myWriter = new StreamWriter(exeLocation + "/BlackScreensPrefs.xml");
+                mySerializer.Serialize(myWriter, up);
+                myWriter.Close();
+            }
+            catch (Exception) { }
+        }
+
+        /// <summary>
+        /// Load user config file by XmlSerializer
+        /// </summary>
+        public void loadUserConfigFile(MainWindow mainWindow)
+        {
+            UserPreferences up;
+
+            String exeLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            CommonData.dataInstance.OptionFileLocation = exeLocation;
+            XmlSerializer mySerializer = new XmlSerializer(typeof(UserPreferences));
+
+            CommonData.dataInstance.LogToFile.Debug("loadUserConfigFile()");
+
+            // Default values
+            CommonData.dataInstance.ClickThrough = false;
+            CommonData.dataInstance.HideTexts = false;
+            CommonData.dataInstance.Opacity = 90;
+            CommonData.dataInstance.MsDelayMouseCursorHide = 3000;
+            CommonData.dataInstance.ReduceAppOnLaunch = false;
+            CommonData.dataInstance.FirstAppLaunch = true;
+            CommonData.dataInstance.ImageFileNameScreen1 = "";
+            CommonData.dataInstance.ImageFileNameScreen2 = "";
+            CommonData.dataInstance.ImageFileNameScreen3 = "";
+            CommonData.dataInstance.ImageFileNameScreen4 = "";
+            CommonData.dataInstance.ImageFileNameScreen5 = "";
+            CommonData.dataInstance.ImageFileNameScreen6 = "";
+
+            try
+            {
+                FileStream myFileStream = new FileStream(exeLocation + "/BlackScreensPrefs.xml", FileMode.Open);
+                up = (UserPreferences)mySerializer.Deserialize(myFileStream);
+                CommonData.dataInstance.Opacity = up.Opacity;
+                CommonData.dataInstance.HideTexts = !up.ShowTextsOnBlackScreens;
+                CommonData.dataInstance.ClickThrough = up.ClickThrough;
+                CommonData.dataInstance.ReduceAppOnLaunch = up.ReduceAppOnLaunch;
+                CommonData.dataInstance.FirstAppLaunch = up.FirstAppLaunch;
+                CommonData.dataInstance.MsDelayMouseCursorHide = up.MsDelayMouseCursorHide;
+                CommonData.dataInstance.ImageFileNameScreen1 = up.ImageFileNameScreen1;
+                CommonData.dataInstance.ImageFileNameScreen2 = up.ImageFileNameScreen2;
+                CommonData.dataInstance.ImageFileNameScreen3 = up.ImageFileNameScreen3;
+                CommonData.dataInstance.ImageFileNameScreen4 = up.ImageFileNameScreen4;
+                CommonData.dataInstance.ImageFileNameScreen5 = up.ImageFileNameScreen5;
+                CommonData.dataInstance.ImageFileNameScreen6 = up.ImageFileNameScreen6;
+            }
+            catch (Exception) { }
+
+            //mainWindow.hideAfterloadUserConfigFile = CommonData.dataInstance.ReduceAppOnLaunch;
+
+            /*if (CommonData.dataInstance.FirstAppLaunch)
+            {
+                CommonData.dataInstance.FirstAppLaunch = false;
+                saveUserConfigFiles();
+            }*/
         }
     }
 }

@@ -20,7 +20,8 @@ namespace BlackScreensWPF
         private static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
         private const UInt32 SWP_NOSIZE = 0x0001;
         private const UInt32 SWP_NOMOVE = 0x0002;
-        private const UInt32 TOPMOST_FLAGS = SWP_NOMOVE | SWP_NOSIZE;
+        private const UInt32 SWP_ASYNCWINDOWPOS = 0x4000;
+        private const UInt32 TOPMOST_FLAGS = SWP_NOMOVE | SWP_NOSIZE | SWP_ASYNCWINDOWPOS;
         private const int WS_EX_TRANSPARENT = 0x00000020;
         private const int GWL_EXSTYLE = (-20);
 
@@ -84,6 +85,7 @@ namespace BlackScreensWPF
         public void updateBlackWindowParams()
         {
             this.Opacity = (Double)(CommonData.dataInstance.Opacity) / 100;
+            this.Activate();
             setWindowsClickThrough(CommonData.dataInstance.ClickThrough);
             string imageNameToUse = "";
             switch (this.screenNumber)
@@ -116,15 +118,23 @@ namespace BlackScreensWPF
             this.screenDeviceName = currentScreen.DeviceName;
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void putWindowsOnTop()
         {
+            CommonData.dataInstance.LogToFile.Debug("BlackWindow.putWindowsOnTop()");
             // Set BlackWindow top most against all others Microsoft Windows windows
             System.Windows.Interop.WindowInteropHelper wih = new System.Windows.Interop.WindowInteropHelper(this);
-            SetWindowPos(wih.Handle, HWND_TOPMOST, 100, 100, 300, 300, TOPMOST_FLAGS);
+            bool res = SetWindowPos(wih.Handle, HWND_TOPMOST, 100, 100, 300, 300, TOPMOST_FLAGS);
+            CommonData.dataInstance.LogToFile.Debug("BlackWindow.putWindowsOnTop().SetWindowsPos() result = " + res);
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            CommonData.dataInstance.LogToFile.Debug("BlackWindow.Window_Loaded()");
             setWindowsClickThrough(false);
             updateScreenDeviceName();
             mouseCursorTimer.Tick += mouseCursorTimerTick;
             mouseCursorTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            putWindowsOnTop();
         }
 
         private void mouseCursorTimerTick(object sender, EventArgs e)
@@ -179,7 +189,6 @@ namespace BlackScreensWPF
             sbKeyboardHelp.Remove(tbKeyboardHelp);
 
             resetInfoOpacity(1.0);
-
             createAllStoryBoards();
 
             sbClickHelp.Begin(tbClickHelp, true);
@@ -204,14 +213,18 @@ namespace BlackScreensWPF
         /// </summary>
         public void ShowWindow()
         {
+            CommonData.dataInstance.LogToFile.Debug("BlackWindow.ShowWindow()");
             this.tbKeyboardHelp.Text = this.KeyToUse;
-            this.Show();
             updateScreenDeviceName();
             this.tbScreenDeviceName.Text = CommonData.dataInstance.findDisplayByScreenName(this.screenDeviceName).FriendlyName;
             Visibility vTexts = CommonData.dataInstance.HideTexts ? Visibility.Hidden : Visibility.Visible;
             tbScreenDeviceName.Visibility = vTexts;
             tbClickHelp.Visibility = vTexts;
             tbKeyboardHelp.Visibility = vTexts;
+            this.Show();
+            this.Activate();
+            // Ensure that black Window is on top, even if Windows.Minized was used on main screen
+            putWindowsOnTop();
             launchInfoAnimation();
             // Trying to correct Windows system DPI scale for screens, but not working
             // What worked is updating the app.manifest with 

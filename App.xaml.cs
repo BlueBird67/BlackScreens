@@ -1,4 +1,5 @@
 ﻿using BlackScreenAppWPF;
+using BlackScreens;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Navigation;
 using WindowsDisplayAPI.DisplayConfig;
 
 namespace BlackScreensWPF
@@ -47,6 +49,21 @@ namespace BlackScreensWPF
             {
 
             }
+
+            CommonData.dataInstance.FParams = new MainWindow();
+            CommonData.dataInstance.loadUserConfigFile(CommonData.dataInstance.FParams);
+            if ((CommonData.dataInstance.FirstAppLaunch == true) || (CommonData.dataInstance.ReduceAppOnLaunch == false))
+            {
+                CommonData.dataInstance.FParams.showWindow();
+            }
+            else
+                CommonData.dataInstance.FirstAppLaunch = false;
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
         }
 
         /// <summary>
@@ -114,7 +131,8 @@ namespace BlackScreensWPF
             // Hidding parameters window if it's on the same black screen to switch visible
             if (CommonData.dataInstance.ParamsScreenDeviceName == bwToShow.ScreenDeviceName)
             {
-                CommonData.dataInstance.FParams.WindowState = WindowState.Minimized;
+                //CommonData.dataInstance.FParams.WindowState = WindowState.Minimized;
+                CommonData.dataInstance.FParams.minimizeWindow();
             }
         }
 
