@@ -321,7 +321,7 @@
                         </Paragraph>
                         <Paragraph Foreground="LightGreen" Margin="0 10 0 0">Updates history</Paragraph>
                         <Paragraph Margin="0" FontWeight="Bold">v1.13 (31/07/2023)</Paragraph>
-                        <Paragraph Margin="0" xml:space="preserve">      - Déplacements du fichier de configuration BlackScreensPrefs.xml vers c:\users\%user%\AppData\Roaming\Blackscreens</Paragraph>
+                        <Paragraph Margin="0" xml:space="preserve">      - Move configuration file folder BlackScreensPrefs.xml to c:\users\%user%\AppData\Roaming\Blackscreens</Paragraph>
                         <Paragraph Margin="0" FontWeight="Bold">v1.12 (29/07/2023)</Paragraph>
                         <Paragraph Margin="0" xml:space="preserve">      - Bugs correction</Paragraph>
                         <Paragraph Margin="0" FontWeight="Bold">v1.11 (28/07/2023)</Paragraph>
