@@ -35,9 +35,9 @@ Just install the app with the Windows installer you can download here https://gi
 
 ## Tests
 
-This App has been tested already on Windows 10 and 11 lastest officials builds on november 2022, with 2 different screens.
+This App has been tested already on Windows 10 and 11 lastest officials builds on August 2023, with 2 different screens.
 
-BlackScreens works with DotNet 4.8. It has been built with Visual Studio 2019 Community edition.
+BlackScreens works with DotNet 4.8. It has been built with Visual Studio 2022 Community edition.
 
 It need testers in this cases:
 - Older windows 10 builds (>1 year)
