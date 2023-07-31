@@ -22,7 +22,8 @@ namespace BlackScreensWPF
         {
             CommonData.dataInstance.LogToFile.Debug("MainWindow()");
             InitializeComponent();
-            this.tbTitle.Text = "BlackScreens 1.12";
+            this.tbTitle.Text = "BlackScreens 1.13";
+            CommonData.dataInstance.LogToFile.Info("MainWindow() "+ this.tbTitle.Text + " launching");
             this.DataContext = CommonData.dataInstance;
             notifyIcon.TrayLeftMouseDown += NotifyIcon_TrayLeftMouseDown;
             refreshMainWindowCurrentScreen();
@@ -168,6 +169,7 @@ namespace BlackScreensWPF
             this.WindowState = WindowState.Normal;
             this.ShowInTaskbar = true;
             this.Show();
+            this.Activate();
         }
 
         private void OnMinimizeButtonClick(object sender, RoutedEventArgs e)

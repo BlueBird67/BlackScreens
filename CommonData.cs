@@ -49,8 +49,10 @@ namespace BlackScreensWPF
         private bool reduceAppOnLaunch = false;
         private bool firstAppLaunch = true;
         private int msDelayMouseCursorHide = 3000;
-        private Logger logToFile = NLog.LogManager.GetCurrentClassLogger();
+        private Logger logToFile = null;
         private string optionFileLocation = "";
+        private String appDataBaseFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        private String appDataCompleteFolderUri = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BlackScreens";
 
         // Users options
         public int Opacity { get => opacity; set => opacity = value; }
@@ -85,6 +87,8 @@ namespace BlackScreensWPF
         public Rectangle Screen6TooltipData { get => screen6TooltipData; set => screen6TooltipData = value; }
         public int MsDelayMouseCursorHide { get => msDelayMouseCursorHide; set => msDelayMouseCursorHide = value; }
         public string OptionFileLocation { get => optionFileLocation; set => optionFileLocation = value; }
+        public string AppDataBaseFolder { get => appDataBaseFolder; set => appDataBaseFolder = value; }
+        public string AppDataCompleteFolderUri { get => appDataCompleteFolderUri; set => appDataCompleteFolderUri = value; }
         public Logger LogToFile
         {
             get => logToFile; set => logToFile = value;
@@ -92,6 +96,21 @@ namespace BlackScreensWPF
 
         static CommonData()
         {
+            if (!Directory.Exists(dataInstance.AppDataCompleteFolderUri))
+            {
+                Directory.CreateDirectory(dataInstance.AppDataCompleteFolderUri);
+            }
+            var logFactory = new LogFactory();
+            String fileConfigLogUri = dataInstance.AppDataCompleteFolderUri + "\\NLog.config";
+            if (File.Exists(fileConfigLogUri)) {
+                logFactory.Setup().LoadConfigurationFromFile(fileConfigLogUri);
+                dataInstance.LogToFile = logFactory.GetCurrentClassLogger();
+            }
+            else
+                dataInstance.LogToFile = logFactory.CreateNullLogger();
+
+            
+
             dataInstance.LogToFile.Debug("Creating CommonData static instance");
         }
 
@@ -149,11 +168,11 @@ namespace BlackScreensWPF
                 ImageFileNameScreen6 = CommonData.dataInstance.ImageFileNameScreen6
             };
 
-            String exeLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            //String exeLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             XmlSerializer mySerializer = new XmlSerializer(typeof(UserPreferences));
             try
             {
-                StreamWriter myWriter = new StreamWriter(exeLocation + "/BlackScreensPrefs.xml");
+                StreamWriter myWriter = new StreamWriter(AppDataCompleteFolderUri + "\\BlackScreensPrefs.xml");
                 mySerializer.Serialize(myWriter, up);
                 myWriter.Close();
             }
@@ -167,8 +186,8 @@ namespace BlackScreensWPF
         {
             UserPreferences up;
 
-            String exeLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            CommonData.dataInstance.OptionFileLocation = exeLocation;
+            //String exeLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            CommonData.dataInstance.OptionFileLocation = AppDataCompleteFolderUri + "\\BlackScreensPrefs.xml";
             XmlSerializer mySerializer = new XmlSerializer(typeof(UserPreferences));
 
             CommonData.dataInstance.LogToFile.Debug("loadUserConfigFile()");
@@ -189,7 +208,7 @@ namespace BlackScreensWPF
 
             try
             {
-                FileStream myFileStream = new FileStream(exeLocation + "/BlackScreensPrefs.xml", FileMode.Open);
+                FileStream myFileStream = new FileStream(CommonData.dataInstance.AppDataCompleteFolderUri + "\\BlackScreensPrefs.xml", FileMode.Open);
                 up = (UserPreferences)mySerializer.Deserialize(myFileStream);
                 CommonData.dataInstance.Opacity = up.Opacity;
                 CommonData.dataInstance.HideTexts = !up.ShowTextsOnBlackScreens;

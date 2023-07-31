@@ -280,6 +280,9 @@
     </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="BlackScreen072023.pfx" />
+    <AdditionalFiles Include="BlackScreensPrefs.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

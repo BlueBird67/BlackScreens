@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserPreferences xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Opacity>90</Opacity>
+  <ShowTextsOnBlackScreens>true</ShowTextsOnBlackScreens>
+  <ClickThrough>false</ClickThrough>
+  <MsDelayMouseCursorHide>3000</MsDelayMouseCursorHide>
+  <ReduceAppOnLaunch>false</ReduceAppOnLaunch>
+  <FirstAppLaunch>false</FirstAppLaunch>
+  <ImageFileNameScreen1 />
+  <ImageFileNameScreen2 />
+  <ImageFileNameScreen3 />
+  <ImageFileNameScreen4 />
+  <ImageFileNameScreen5 />
+  <ImageFileNameScreen6 />
+</UserPreferences>
