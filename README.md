@@ -14,9 +14,12 @@ Main use cases for multiple screens users:
 
 ## Download and install
 
-Just install the app with the Windows installer you can download here https://github.com/BlueBird67/BlackScreens/releases/download/1.9/BlackScreens.1.09.Setup.msi [Current version 1.09 15/01/2021]
+Just install the app with the Windows installer you can download here https://github.com/BlueBird67/BlackScreens/releases/download/1.13/BlackScreens.v1.13.Setup.msi [Current version 1.13 - 31/07/2023]
 
 ## Versions
+- v1.13 (31/07/2023)
+  Added App option hide on windows Icon Task bar on launch
+  Move options xml file to AppData/Roaming
 - v1.09 (15/01/2021)
   Added Windows 10/11 system scale parameter compatibility
   Let user use an different image for each of the 3 first screens for darkening, instead of full black color
