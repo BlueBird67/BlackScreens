@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog.Targets.Wrappers;
+using System;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
@@ -7,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using WindowsDisplayAPI.DisplayConfig;
 
 namespace BlackScreensWPF
 {
@@ -116,6 +118,11 @@ namespace BlackScreensWPF
             System.Windows.Interop.WindowInteropHelper wih = new System.Windows.Interop.WindowInteropHelper(this);
             this.currentScreen = Screen.FromHandle(wih.Handle);
             this.screenDeviceName = currentScreen.DeviceName;
+
+            if (ScreenNumber > -1) { 
+                PathDisplayTarget display = CommonData.dataInstance.findDisplayByScreenName(Screen.AllScreens[ScreenNumber-1].DeviceName);
+                this.screenDeviceName = Screen.AllScreens[ScreenNumber - 1].DeviceName;
+            }
         }
 
         private void putWindowsOnTop()

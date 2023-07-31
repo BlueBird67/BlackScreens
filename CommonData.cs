@@ -224,14 +224,6 @@ namespace BlackScreensWPF
                 CommonData.dataInstance.ImageFileNameScreen6 = up.ImageFileNameScreen6;
             }
             catch (Exception) { }
-
-            //mainWindow.hideAfterloadUserConfigFile = CommonData.dataInstance.ReduceAppOnLaunch;
-
-            /*if (CommonData.dataInstance.FirstAppLaunch)
-            {
-                CommonData.dataInstance.FirstAppLaunch = false;
-                saveUserConfigFiles();
-            }*/
         }
     }
 }

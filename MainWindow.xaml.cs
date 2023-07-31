@@ -62,7 +62,7 @@ namespace BlackScreensWPF
         /// <summary>
         /// Update all screens names on application launch, and handle visibility of information on params window
         /// </summary>
-        private void updateScreenNames()
+        public void updateScreenNames()
         {
             CommonData.dataInstance.LogToFile.Debug("updateScreenNames()");
             if (Screen.AllScreens.Length > 0)

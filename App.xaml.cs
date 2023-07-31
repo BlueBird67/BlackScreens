@@ -21,8 +21,6 @@ namespace BlackScreensWPF
 
         void App_Startup(object sender, StartupEventArgs e)
         {
-            //String test = System.Windows.Forms.Application.CommonAppDataPath;
-            //CommonData.dataInstance.LogToFile.Debug("TEST = " + test);
             // Check for duplicate launch of application
             String thisprocessname = Process.GetCurrentProcess().ProcessName;
             if (Process.GetProcesses().Count(p => p.ProcessName == thisprocessname) > 1)
@@ -60,7 +58,11 @@ namespace BlackScreensWPF
             {
                 CommonData.dataInstance.FParams.showWindow();
             }
-                else CommonData.dataInstance.FParams.minimizeWindow();
+            else
+            {
+                CommonData.dataInstance.FParams.updateScreenNames();
+                CommonData.dataInstance.FParams.minimizeWindow();
+            }
             CommonData.dataInstance.FirstAppLaunch = false;
         }
 
