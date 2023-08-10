@@ -173,7 +173,8 @@ namespace BlackScreensWPF
             bool keyHandled = false;
             Keys keyData = (Keys)lParam.vkCode;
             // Testing alt+x key pressed
-            if (kh.AltHeld)
+
+            if (kh.AltHeld && !(kh.CtrlHeld || kh.ShiftHeld))
             {
                 int screenNumKey = -1;
                 if (keyData == Keys.D0) {
