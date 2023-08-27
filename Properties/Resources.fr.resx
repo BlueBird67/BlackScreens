@@ -126,6 +126,9 @@
   <data name="alt2_switch" xml:space="preserve">
     <value>Alt+2 : switch 2ème écran</value>
   </data>
+  <data name="alt3_switch" xml:space="preserve">
+    <value>Alt+3 : switch 3ème écran</value>
+  </data>
   <data name="alt4_switch" xml:space="preserve">
     <value>Alt + 4 : switch 4ème écran</value>
   </data>
@@ -134,9 +137,6 @@
   </data>
   <data name="alt6_switch" xml:space="preserve">
     <value>Alt + 6 : switch 6ème écran</value>
-  </data>
-  <data name="alt_3switch" xml:space="preserve">
-    <value>Alt+3 : switch 3ème écran</value>
   </data>
   <data name="exitBtn" xml:space="preserve">
     <value>Quitter</value>
