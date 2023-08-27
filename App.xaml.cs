@@ -21,6 +21,8 @@ namespace BlackScreensWPF
 
         void App_Startup(object sender, StartupEventArgs e)
         {
+            // For testing languages localization purpose
+            //System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en");
             // Check for duplicate launch of application
             String thisprocessname = Process.GetCurrentProcess().ProcessName;
             if (Process.GetProcesses().Count(p => p.ProcessName == thisprocessname) > 1)

@@ -118,45 +118,45 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="allowClickThrough" xml:space="preserve">
-    <value>Allow click through</value>
+    <value>Click au travers</value>
   </data>
   <data name="alt1_switch" xml:space="preserve">
-    <value>Alt+1 : switch 1st screen</value>
+    <value>Alt+1 : switch 1er écran</value>
   </data>
   <data name="alt2_switch" xml:space="preserve">
-    <value>Alt+2 : switch 2nd screen</value>
-  </data>
-  <data name="alt3_switch" xml:space="preserve">
-    <value>Alt+3 : switch 3th screen</value>
+    <value>Alt+2 : switch 2ème écran</value>
   </data>
   <data name="alt4_switch" xml:space="preserve">
-    <value>Alt + 4 : switch 4th screen</value>
+    <value>Alt + 4 : switch 4ème écran</value>
   </data>
   <data name="alt5_switch" xml:space="preserve">
-    <value>Alt + 5 : switch 5th screen</value>
+    <value>Alt + 5 : switch 5ème écran</value>
   </data>
   <data name="alt6_switch" xml:space="preserve">
-    <value>Alt + 6 : switch 6th screen</value>
+    <value>Alt + 6 : switch 6ème écran</value>
+  </data>
+  <data name="alt_3switch" xml:space="preserve">
+    <value>Alt+3 : switch 3ème écran</value>
   </data>
   <data name="exitBtn" xml:space="preserve">
-    <value>Exit</value>
+    <value>Quitter</value>
   </data>
   <data name="hideOnTaskbarOnStart" xml:space="preserve">
-    <value>Hide on taskbar on start</value>
+    <value>Cacher l'app au démarrage</value>
   </data>
   <data name="hideTexts" xml:space="preserve">
-    <value>Hide texts</value>
+    <value>Cacher les textes</value>
   </data>
   <data name="minimizeBtn" xml:space="preserve">
-    <value>Minimize</value>
+    <value>Réduire</value>
   </data>
   <data name="opacity" xml:space="preserve">
-    <value>Opacity</value>
+    <value>Opacité</value>
   </data>
   <data name="setImage" xml:space="preserve">
-    <value>Set image</value>
+    <value>Choisir une image</value>
   </data>
   <data name="stopUsingImage" xml:space="preserve">
-    <value>Stop using image</value>
+    <value>Annuler l'image</value>
   </data>
 </root>

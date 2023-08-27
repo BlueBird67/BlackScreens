@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BlackScreensWPF" xmlns:taskbarnotification="clr-namespace:Hardcodet.Wpf.TaskbarNotification"
+        xmlns:rs="clr-namespace:BlackScreens.Properties"
         mc:Ignorable="d"
         Title="BlackScreens"
         FontSize="18" Foreground="White" Background="Black" FontFamily="Ubuntu" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" BorderThickness="1" WindowStyle="None" StateChanged="Window_StateChanged" Loaded="Window_Loaded" KeyDown="Window_KeyDown" Topmost="True" Closing="Window_Closing" Width="800" SizeToContent="Height">
@@ -177,10 +178,10 @@
                     <Run></Run>
                 </TextBlock>
             </StackPanel>
-            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Name="tbScreen1AltKeyInfo">Alt+1 : switch 1st screen</TextBlock>
-            <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Name="tbScreen2AltKeyInfo">Alt+2 : switch 2nd screen</TextBlock>
-            <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Name="tbScreen3AltKeyInfo">Alt+3 : switch 3td screen</TextBlock>
-            <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Name="tbScreen1SetImage" FontSize="12px" MouseLeftButtonDown="tbScreen1SetImage_MouseLeftButtonDown">Set image</TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Name="tbScreen1AltKeyInfo" Text="{x:Static rs:Resources.alt1_switch}"></TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Name="tbScreen2AltKeyInfo" Text="{x:Static rs:Resources.alt2_switch}"></TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Name="tbScreen3AltKeyInfo" Text="{x:Static rs:Resources.alt3_switch}"></TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Name="tbScreen1SetImage" FontSize="12px" MouseLeftButtonDown="tbScreen1SetImage_MouseLeftButtonDown" Text="{x:Static rs:Resources.setImage}"></TextBlock>
             <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Name="tbScreen1Name" Text="{Binding Screen1Name}" ToolTipService.ShowDuration="500000" MouseLeftButtonDown="tbScreen1Name_MouseLeftButtonDown">
                 <TextBlock.ToolTip>
                     <TextBlock Name="ttScreen1">
@@ -199,7 +200,7 @@
                     </TextBlock>
                 </TextBlock.ToolTip>
             </TextBlock>
-            <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Name="tbScreen2SetImage" FontSize="12px" MouseLeftButtonDown="tbScreen2SetImage_MouseLeftButtonDown">Set image</TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Name="tbScreen2SetImage" FontSize="12px" MouseLeftButtonDown="tbScreen2SetImage_MouseLeftButtonDown" Text="{x:Static rs:Resources.setImage}"></TextBlock>
             <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Name="tbScreen2Name" Text="{Binding Screen2Name}" ToolTipService.ShowDuration="500000">
                 <TextBlock.ToolTip>
                     <TextBlock Name="ttScreen2">
@@ -218,7 +219,7 @@
                     </TextBlock>
                 </TextBlock.ToolTip>
             </TextBlock>
-            <TextBlock Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Name="tbScreen3SetImage" FontSize="12px" MouseLeftButtonDown="tbScreen3SetImage_MouseLeftButtonDown">Set image</TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Name="tbScreen3SetImage" FontSize="12px" MouseLeftButtonDown="tbScreen3SetImage_MouseLeftButtonDown" Text="{x:Static rs:Resources.setImage}"></TextBlock>
             <TextBlock Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" Name="tbScreen3Name" Text="{Binding Screen3Name}" ToolTipService.ShowDuration="500000">
                 <TextBlock.ToolTip>
                     <TextBlock Name="ttScreen3">
@@ -237,9 +238,9 @@
                     </TextBlock>
                 </TextBlock.ToolTip>
             </TextBlock>
-            <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Name="tbScreen4AltKeyInfo">Alt+4 : switch 1st screen</TextBlock>
-            <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Name="tbScreen5AltKeyInfo">Alt+5 : switch 2nd screen</TextBlock>
-            <TextBlock Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" Name="tbScreen6AltKeyInfo">Alt+6 : switch 3td screen</TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Name="tbScreen4AltKeyInfo" Text="{x:Static rs:Resources.alt4_switch}"></TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Name="tbScreen5AltKeyInfo" Text="{x:Static rs:Resources.alt5_switch}"></TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" Name="tbScreen6AltKeyInfo" Text="{x:Static rs:Resources.alt6_switch}"></TextBlock>
             <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Name="tbScreen4Name" Text="{Binding Screen1Name}" ToolTipService.ShowDuration="500000">
                 <TextBlock.ToolTip>
                     <TextBlock Name="ttScreen4">
@@ -295,22 +296,25 @@
                 </TextBlock.ToolTip>
             </TextBlock>
             <TextBlock Grid.Row="5" Grid.Column="0" HorizontalAlignment="Left" Margin="35 15 0 0">
-                Opacity
+                <TextBlock Text="{x:Static rs:Resources.opacity}"></TextBlock>
                 <TextBlock Margin="70 0 0 0" HorizontalAlignment="Right" Width="30" Text="{Binding ElementName=sOpacity, Path=Value, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
                 <TextBlock Margin="0 0 0 0" HorizontalAlignment="Right" Width="auto">%</TextBlock>
             </TextBlock>
             <Slider Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 15 0 0" HorizontalAlignment="Left" Name="sOpacity" Value="{Binding Opacity}" Maximum="100" Width="511" TickFrequency="5" TickPlacement="Both" IsSnapToTickEnabled="True" ValueChanged="sOpacity_ValueChanged">
             </Slider>
             <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="5" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0 10 0 0">
-                <TextBlock Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" Text="Hide texts" Margin="70 0 15 0"></TextBlock>
+                <TextBlock Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" Text="{x:Static rs:Resources.hideTexts}" Margin="70 0 15 0"></TextBlock>
                 <CheckBox Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" Name="cbShowTexts" Margin="0 0 75 0" Background="Black" Foreground="#FFFDFDFD" Style="{DynamicResource CheckBoxStyleBlack}" IsChecked="{Binding HideTexts}"></CheckBox>
-                <TextBlock Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" Text="Allow click through" Margin="0 0 15 0"></TextBlock>
+                <TextBlock Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" Text="{x:Static rs:Resources.allowClickThrough}" Margin="0 0 15 0"></TextBlock>
                 <CheckBox Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" Name="cbClickThrough" Margin="0 0 75 0" Background="Black" Foreground="#FFFDFDFD" Style="{DynamicResource CheckBoxStyleBlack}" IsChecked="{Binding ClickThrough}" Click="cbClickThrough_Click"></CheckBox>
-                <TextBlock Grid.Row="6" Grid.Column="2" HorizontalAlignment="Center" Text="Hide on taskbar on start" Margin="0 0 15 0"></TextBlock>
+                <TextBlock Grid.Row="6" Grid.Column="2" HorizontalAlignment="Center" Text="{x:Static rs:Resources.hideOnTaskbarOnStart}" Margin="0 0 15 0"></TextBlock>
                 <CheckBox Grid.Row="6" Grid.Column="2" HorizontalAlignment="Center" Name="cbHideOnTaskBar" Margin="0 0 0 0" Background="Black" Foreground="#FFFDFDFD" Style="{DynamicResource CheckBoxStyleBlack}" IsChecked="{Binding ReduceAppOnLaunch}" Click="cbHideOnTaskBarOnStart_Click"></CheckBox>
             </StackPanel>
-            <Button Grid.Row="7" Grid.Column="0" Margin="4,15,6,0" Height="30" Grid.ColumnSpan="1" Name="bExit" Click="bExit_Click">Exit</Button>
-            <Button Grid.Row="7" Grid.Column="1" Margin="5 15 5 0" Height="30" Grid.ColumnSpan="2" Name="bMinimize" Click="bMinimize_Click">Minimize</Button>
+            <Button Grid.Row="7" Grid.Column="0" Margin="4,15,6,0" Height="30" Grid.ColumnSpan="1" Name="bExit" Click="bExit_Click">
+                <TextBlock Text="{x:Static rs:Resources.exitBtn}"></TextBlock></Button>
+            <Button Grid.Row="7" Grid.Column="1" Margin="5 15 5 0" Height="30" Grid.ColumnSpan="2" Name="bMinimize" Click="bMinimize_Click">
+                <TextBlock Text="{x:Static rs:Resources.minimizeBtn}"></TextBlock>
+            </Button>
             <StackPanel Grid.Row="8" Grid.ColumnSpan="3" Orientation="Horizontal" Visibility="Collapsed" Height="auto" Width="auto" Name="spUpdatesHistory" Background="#262626">
                 <Expander Name="expUpdatesHistory" Margin="0 0 0 0" IsExpanded="True" Collapsed="expUpdatesHistory_Collapsed" Cursor="Hand"/>
                 <RichTextBox HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" Width="765" Name="rtbAboutText" Height="auto" IsDocumentEnabled="True" Background="Transparent" Foreground="White" AcceptsReturn="True" AcceptsTab="True" BorderBrush="Transparent" BorderThickness="0" IsReadOnly="True" MaxHeight="250">

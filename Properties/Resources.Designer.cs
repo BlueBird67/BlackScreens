@@ -19,10 +19,10 @@ namespace BlackScreens.Properties {
     // à l'aide d'un outil, tel que ResGen ou Visual Studio.
     // Pour ajouter ou supprimer un membre, modifiez votre fichier .ResX, puis réexécutez ResGen
     // avec l'option /str ou régénérez votre projet VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace BlackScreens.Properties {
         ///   Retourne l'instance ResourceManager mise en cache utilisée par cette classe.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BlackScreens.Properties.Resources", typeof(Resources).Assembly);
@@ -51,12 +51,138 @@ namespace BlackScreens.Properties {
         ///   les recherches de ressources à l'aide de cette classe de ressource fortement typée.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Allow click through.
+        /// </summary>
+        public static string allowClickThrough {
+            get {
+                return ResourceManager.GetString("allowClickThrough", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Alt+1 : switch 1st screen.
+        /// </summary>
+        public static string alt1_switch {
+            get {
+                return ResourceManager.GetString("alt1_switch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Alt+2 : switch 2nd screen.
+        /// </summary>
+        public static string alt2_switch {
+            get {
+                return ResourceManager.GetString("alt2_switch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Alt+3 : switch 3th screen.
+        /// </summary>
+        public static string alt3_switch {
+            get {
+                return ResourceManager.GetString("alt3_switch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Alt + 4 : switch 4th screen.
+        /// </summary>
+        public static string alt4_switch {
+            get {
+                return ResourceManager.GetString("alt4_switch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Alt + 5 : switch 5th screen.
+        /// </summary>
+        public static string alt5_switch {
+            get {
+                return ResourceManager.GetString("alt5_switch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Alt + 6 : switch 6th screen.
+        /// </summary>
+        public static string alt6_switch {
+            get {
+                return ResourceManager.GetString("alt6_switch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Exit.
+        /// </summary>
+        public static string exitBtn {
+            get {
+                return ResourceManager.GetString("exitBtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Hide on taskbar on start.
+        /// </summary>
+        public static string hideOnTaskbarOnStart {
+            get {
+                return ResourceManager.GetString("hideOnTaskbarOnStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Hide texts.
+        /// </summary>
+        public static string hideTexts {
+            get {
+                return ResourceManager.GetString("hideTexts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Minimize.
+        /// </summary>
+        public static string minimizeBtn {
+            get {
+                return ResourceManager.GetString("minimizeBtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Opacity.
+        /// </summary>
+        public static string opacity {
+            get {
+                return ResourceManager.GetString("opacity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Set image.
+        /// </summary>
+        public static string setImage {
+            get {
+                return ResourceManager.GetString("setImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Stop using image.
+        /// </summary>
+        public static string stopUsingImage {
+            get {
+                return ResourceManager.GetString("stopUsingImage", resourceCulture);
             }
         }
     }
