@@ -1,12 +1,10 @@
 ﻿using System;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Xml.Serialization;
 using WindowsDisplayAPI.DisplayConfig;
 
 namespace BlackScreensWPF
@@ -22,7 +20,7 @@ namespace BlackScreensWPF
         {
             CommonData.dataInstance.LogToFile.Debug("MainWindow()");
             InitializeComponent();
-            this.tbTitle.Text = "BlackScreens 1.13";
+            this.tbTitle.Text = "BlackScreens 1.14";
             CommonData.dataInstance.LogToFile.Info("MainWindow() "+ this.tbTitle.Text + " launching");
             this.DataContext = CommonData.dataInstance;
             notifyIcon.TrayLeftMouseDown += NotifyIcon_TrayLeftMouseDown;
@@ -64,6 +62,8 @@ namespace BlackScreensWPF
         /// </summary>
         public void updateScreenNames()
         {
+            String setImage = BlackScreens.Properties.Resources.setImage; 
+            String stopUsingImage = BlackScreens.Properties.Resources.stopUsingImage;
             CommonData.dataInstance.LogToFile.Debug("updateScreenNames()");
             if (Screen.AllScreens.Length > 0)
             {
@@ -81,10 +81,10 @@ namespace BlackScreensWPF
                 // Update label for image usage, instead of black color
                 if (!String.IsNullOrEmpty(CommonData.dataInstance.ImageFileNameScreen1))
                 {
-                    tbScreen1SetImage.Text = "Stop using image";
+                    tbScreen1SetImage.Text = stopUsingImage;
                 }
                 else
-                    tbScreen1SetImage.Text = "Set image";
+                    tbScreen1SetImage.Text = setImage;
             }
             if (Screen.AllScreens.Length > 1)
             {
@@ -97,10 +97,10 @@ namespace BlackScreensWPF
                 // Update label for image usage, instead of black color
                 if (!String.IsNullOrEmpty(CommonData.dataInstance.ImageFileNameScreen2))
                 {
-                    tbScreen2SetImage.Text = "Stop using image";
+                    tbScreen2SetImage.Text = stopUsingImage;
                 }
                 else
-                    tbScreen2SetImage.Text = "Set image";
+                    tbScreen2SetImage.Text = setImage;
             }
             if (Screen.AllScreens.Length > 2)
             {
@@ -113,10 +113,10 @@ namespace BlackScreensWPF
                 // Update label for image usage, instead of black color
                 if (!String.IsNullOrEmpty(CommonData.dataInstance.ImageFileNameScreen3))
                 {
-                    tbScreen3SetImage.Text = "Stop using image";
+                    tbScreen3SetImage.Text = stopUsingImage;
                 }
                 else
-                    tbScreen3SetImage.Text = "Set image";
+                    tbScreen3SetImage.Text = setImage;
             }
             if (Screen.AllScreens.Length > 3)
             {
